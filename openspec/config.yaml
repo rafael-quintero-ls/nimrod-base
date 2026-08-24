@@ -1,0 +1,34 @@
+schema: spec-driven
+
+context: |
+  Tech stack: Nuxt 4 (Vue 3, TypeScript), Vuetify 3 (Vuexy admin template).
+  Auth via @sidebase/nuxt-auth (NextAuth) CredentialsProvider, JWT in cookie `accessToken`.
+  Authorization via @casl/ability + @casl/vue, enforced in middleware/acl.global.ts.
+  Structure: pages/<area>/*.vue are thin route files; actual UI lives under the
+  mirrored views/<area>/* path. @core and @layouts are template framework code,
+  not application code. server/api/* are Nitro server routes; server/fake-db/*
+  backs template demo data and is not a real backend.
+  We use Conventional Commits, validated by .gitlint.
+
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+# Example:
+#   rules:
+#     proposal:
+#       - Keep proposals under 500 words
+#       - Always include a "Non-goals" section
+#     tasks:
+#       - Break tasks into chunks of max 2 hours
+
+# Per-operation guidance (optional)
+# Add advisory guidance for how apply and archive work should be conducted.
+# This is separate from artifact rules above.
+# Example:
+#   operations:
+#     apply:
+#       guidance:
+#         - Keep test summaries concise
+#     archive:
+#       guidance:
+#         - Summarize the archive outcome before finishing

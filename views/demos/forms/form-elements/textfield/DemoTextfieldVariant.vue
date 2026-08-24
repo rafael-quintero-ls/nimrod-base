@@ -1,0 +1,58 @@
+<template>
+  <VRow>
+    <VCol
+      cols="12"
+      md="6"
+    >
+      <VTextField
+        :id="useId()"
+        label="Outlined"
+        variant="outlined"
+      />
+    </VCol>
+
+    <VCol
+      cols="12"
+      md="6"
+    >
+      <VTextField
+        :id="useId()"
+        label="Filled"
+        variant="filled"
+      />
+    </VCol>
+
+    <VCol
+      cols="12"
+      md="6"
+    >
+      <VTextField
+        :id="useId()"
+        label="Solo"
+        variant="solo"
+      />
+    </VCol>
+
+    <VCol
+      cols="12"
+      md="6"
+    >
+      <VTextField
+        :id="useId()"
+        label="Plain"
+        variant="plain"
+      />
+    </VCol>
+
+    <VCol
+      cols="12"
+      md="6"
+    >
+      <VTextField
+        :id="useId()"
+        label="Underlined"
+        variant="underlined"
+      />
+    </VCol>
+  </VRow>
+</template>
