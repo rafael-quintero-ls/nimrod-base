@@ -1,6 +1,8 @@
 <script lang="ts" setup>
-import navItems from '@/navigation/vertical'
 import { themeConfig } from '@themeConfig'
+import NavBarI18n from '@core/components/I18n.vue'
+import { VerticalNavLayout } from '@layouts'
+import navItems from '@/navigation/vertical'
 
 // Components
 import Footer from '@/layouts/components/Footer.vue'
@@ -9,10 +11,8 @@ import NavSearchBar from '@/layouts/components/NavSearchBar.vue'
 import NavbarShortcuts from '@/layouts/components/NavbarShortcuts.vue'
 import NavbarThemeSwitcher from '@/layouts/components/NavbarThemeSwitcher.vue'
 import UserProfile from '@/layouts/components/UserProfile.vue'
-import NavBarI18n from '@core/components/I18n.vue'
 
 // @layouts plugin
-import { VerticalNavLayout } from '@layouts'
 </script>
 
 <template>

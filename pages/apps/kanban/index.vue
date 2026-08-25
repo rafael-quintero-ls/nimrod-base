@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import KanbanBoardComp from '@/views/apps/kanban/KanbanBoard.vue'
 import type { AddNewKanbanItem, EditKanbanItem, KanbanState, RenameKanbanBoard } from '@db/apps/kanban/types'
+import KanbanBoardComp from '@/views/apps/kanban/KanbanBoard.vue'
 
 // 👉 initial kanban data fetch
 const { data: kanban, execute: refetchKanban } = await useApi<any>('/apps/kanban')

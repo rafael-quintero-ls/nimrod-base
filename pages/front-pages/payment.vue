@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import Footer from '@/views/front-pages/front-page-footer.vue'
-import Navbar from '@/views/front-pages/front-page-navbar.vue'
-
 import paypalDark from '@images/icons/payments/img/paypal-dark.png'
 import paypalLight from '@images/icons/payments/img/paypal-light.png'
 import visaDark from '@images/icons/payments/img/visa-dark.png'
@@ -9,6 +6,8 @@ import visaLight from '@images/icons/payments/img/visa-light.png'
 
 import { useConfigStore } from '@core/stores/config'
 import type { CustomInputContent } from '@core/types'
+import Navbar from '@/views/front-pages/front-page-navbar.vue'
+import Footer from '@/views/front-pages/front-page-footer.vue'
 
 const visa = useGenerateImageVariant(visaLight, visaDark)
 const paypal = useGenerateImageVariant(paypalLight, paypalDark)

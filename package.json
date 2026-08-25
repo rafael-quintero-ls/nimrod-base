@@ -12,8 +12,8 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "@casl/ability": "^6.7.3",
-    "@casl/vue": "^2.2.2",
+    "@casl/ability": "^6.8.1",
+    "@casl/vue": "^2.2.6",
     "@floating-ui/dom": "1.6.8",
     "@formkit/drag-and-drop": "^0.1.6",
     "@nuxtjs/i18n": "9.5.6",
@@ -25,8 +25,8 @@
     "@tiptap/pm": "^2.27.1",
     "@tiptap/starter-kit": "^2.27.1",
     "@tiptap/vue-3": "^2.27.1",
-    "@vueuse/core": "^10.11.1",
-    "@vueuse/math": "^10.11.1",
+    "@vueuse/core": "^14.4.0",
+    "@vueuse/math": "^14.4.0",
     "apexcharts": "3.54.1",
     "chart.js": "^4.5.1",
     "cookie-es": "^1.2.2",
@@ -34,14 +34,14 @@
     "eslint-plugin-regexp": "^2.10.0",
     "jwt-decode": "^4.0.0",
     "mapbox-gl": "3.5.2",
-    "next-auth": "4.21.1",
-    "nuxt": "^4.2.0",
+    "next-auth": "4.24.15",
+    "nuxt": "^4.5.2",
     "ofetch": "^1.5.0",
     "pinia": "^3.0.3",
     "prismjs": "^1.30.0",
     "roboto-fontface": "^0.10.0",
     "shepherd.js": "^13.0.3",
-    "swiper": "^11.2.10",
+    "swiper": "^12.1.2",
     "ufo": "^1.6.1",
     "unplugin-vue-define-options": "^1.5.5",
     "vue-chartjs": "^5.3.2",
@@ -49,7 +49,7 @@
     "vue-prism-component": "^2.0.0",
     "vue3-apexcharts": "1.5.3",
     "vue3-perfect-scrollbar": "^2.0.0",
-    "vuetify": "^3.10.8",
+    "vuetify": "^3.13.2",
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
@@ -70,7 +70,7 @@
     "@intlify/unplugin-vue-i18n": "^11.0.1",
     "@nuxtjs/device": "^3.2.4",
     "@pinia/nuxt": "^0.11.2",
-    "@sidebase/nuxt-auth": "^1.1.0",
+    "@sidebase/nuxt-auth": "^1.3.1",
     "@stylistic/stylelint-config": "^1.0.1",
     "@stylistic/stylelint-plugin": "^2.1.3",
     "@tiptap/extension-character-count": "^2.27.1",
@@ -83,7 +83,7 @@
     "@types/webfontloader": "^1.6.38",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
-    "@vueuse/nuxt": "^14.0.0",
+    "@vueuse/nuxt": "^14.4.0",
     "eslint": "^8.57.1",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-import-resolver-typescript": "^3.10.1",
@@ -96,7 +96,7 @@
     "eslint-plugin-vue": "^9.33.0",
     "postcss-html": "^1.8.0",
     "postcss-scss": "^4.0.9",
-    "sass": "~1.76.0",
+    "sass": "^1.93.2",
     "shiki": "^1.29.2",
     "stylelint": "16.8.0",
     "stylelint-config-idiomatic-order": "10.0.0",
@@ -105,20 +105,22 @@
     "tsx": "^4.20.6",
     "type-fest": "^5.1.0",
     "typescript": "^5.9.3",
-    "vite": "^7.1.12",
+    "vite": "^8.2.2",
     "vite-plugin-vue-meta-layouts": "^0.6.1",
-    "vite-plugin-vuetify": "2.1.2",
+    "vite-plugin-vuetify": "2.1.3",
     "vite-svg-loader": "^5.1.0",
     "vue-shepherd": "^3.0.0"
   },
   "resolutions": {
     "postcss": "^8",
     "@tiptap/core": "^2",
-    "cookie": "1.0.2"
+    "cookie": "1.0.2",
+    "tar": "^7.5.19"
   },
   "overrides": {
     "postcss": "^8",
     "@tiptap/core": "^2",
-    "cookie": "1.0.2"
+    "cookie": "1.0.2",
+    "tar": "^7.5.19"
   }
 }

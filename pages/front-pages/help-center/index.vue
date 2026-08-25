@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import type { HelpCenterAllCategoryArticles, HelpCenterArticlesOverview } from '@db/pages/help-center/types'
 
+import { useConfigStore } from '@core/stores/config'
 import Footer from '@/views/front-pages/front-page-footer.vue'
 import Navbar from '@/views/front-pages/front-page-navbar.vue'
 
 import HelpCenterLandingArticlesOverview from '@/views/pages/help-center/HelpCenterLandingArticlesOverview.vue'
 import HelpCenterLandingFooter from '@/views/pages/help-center/HelpCenterLandingFooter.vue'
 import HelpCenterLandingKnowledgeBase from '@/views/pages/help-center/HelpCenterLandingKnowledgeBase.vue'
-import { useConfigStore } from '@core/stores/config'
 
 const store = useConfigStore()
 

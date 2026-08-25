@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useTheme } from 'vuetify'
-import type { ChartJsCustomColors } from '@/views/charts/chartjs/types'
 import { getLatestBarChartConfig } from '@core/libs/chartjs/chartjsConfig'
 import BarChart from '@core/libs/chartjs/components/BarChart'
+import type { ChartJsCustomColors } from '@/views/charts/chartjs/types'
 
 interface Props {
   colors: ChartJsCustomColors

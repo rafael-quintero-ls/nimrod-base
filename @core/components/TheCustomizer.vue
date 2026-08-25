@@ -2,7 +2,6 @@
 import { useStorage } from '@vueuse/core'
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
 import { useTheme } from 'vuetify'
-import { staticPrimaryColor, staticPrimaryDarkenColor } from '@/plugins/vuetify/theme'
 import { Direction, Layout, Skins, Theme } from '@core/enums'
 import { useConfigStore } from '@core/stores/config'
 import horizontalLight from '@images/customizer-icons/horizontal-light.svg'
@@ -17,6 +16,7 @@ import defaultSkin from '@images/customizer-icons/default-light.svg'
 import ltrSvg from '@images/customizer-icons/ltr-light.svg'
 import rtlSvg from '@images/customizer-icons/rtl-light.svg'
 import wideSvg from '@images/customizer-icons/wide-light.svg'
+import { staticPrimaryColor, staticPrimaryDarkenColor } from '@/plugins/vuetify/theme'
 
 const isNavDrawerOpen = ref(false)
 

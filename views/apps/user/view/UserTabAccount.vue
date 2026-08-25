@@ -1,7 +1,5 @@
 <script lang="ts" setup>
 import UserInvoiceTable from './UserInvoiceTable.vue'
-
-// Images
 import avatar1 from '@images/avatars/avatar-1.png'
 import avatar2 from '@images/avatars/avatar-2.png'
 import avatar3 from '@images/avatars/avatar-3.png'

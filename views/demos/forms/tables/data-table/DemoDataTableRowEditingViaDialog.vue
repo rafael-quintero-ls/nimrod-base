@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import data from '@/views/demos/forms/tables/data-table/datatable'
 import type { Data } from '@db/pages/datatable/types'
+import data from '@/views/demos/forms/tables/data-table/datatable'
 
 const editDialog = ref(false)
 const deleteDialog = ref(false)

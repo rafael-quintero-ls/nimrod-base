@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import ECommerceAddCustomerDrawer from '@/views/apps/ecommerce/ECommerceAddCustomerDrawer.vue'
 import type { Customer } from '@db/apps/ecommerce/types'
+import ECommerceAddCustomerDrawer from '@/views/apps/ecommerce/ECommerceAddCustomerDrawer.vue'
 
 const searchQuery = ref('')
 const isAddCustomerDrawerOpen = ref(false)

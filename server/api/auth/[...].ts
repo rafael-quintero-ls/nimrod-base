@@ -15,8 +15,10 @@ export default NuxtAuthHandler({
     //   clientSecret: runtimeConfig.AUTH_PROVIDER_GOOGLE_CLIENT_SECRET,
     // }),
 
-    // @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
-    CredentialsProvider.default({
+    // @ts-expect-error next-auth's CJS default export; direct call resolves correctly once
+    // nitro.externals.inline forces a real bundle instead of a runtime external import
+    // (see nuxt.config.ts's nitro.externals comment for why that's required).
+    CredentialsProvider({
       name: 'Credentials',
       credentials: {}, // Object is required but can be left empty.
       async authorize(credentials: any) {

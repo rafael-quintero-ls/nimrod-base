@@ -1,0 +1,70 @@
+## 1. Approval Gate
+
+- [x] 1.1 Present proposal.md, design.md, specs/dependency-security-baseline/spec.md, and this tasks.md to the operator and obtain explicit approval before any implementation task below starts (per `AGENTS.md` human-in-the-loop gate)
+- [x] 1.2 Plan approved by operator in session, 2026-08-24 ("si, apruebo el plan")
+
+## 2. Branch Setup
+
+- [x] 2.1 Branch from tip of `main`: `fix/critical-dependency-security-update`
+
+## 3. Version Bumps
+
+- [x] 3.1 Bump `nuxt` to `4.5.2` in `package.json`
+- [x] 3.2 Bump `vite` to `8.2.2` in `package.json` (corrected from the originally planned `>=7.3.2` — see design.md's "Bump `vite` to `8.2.2`" decision)
+- [x] 3.3 Bump `@casl/ability` to `>=6.7.5` and `@casl/vue` to its matching compatible release in `package.json`
+- [x] 3.4 Bump `next-auth` to `4.24.15` and `@sidebase/nuxt-auth` to `1.3.1` together in `package.json`
+- [x] 3.5 Bump `swiper` to `>=12.1.2` in `package.json`
+- [x] 3.6 Bump `vuetify` to `3.13.2` and `vite-plugin-vuetify` to its matching compatible release in `package.json`
+- [x] 3.7 Run `pnpm install`, capture peer-dependency warnings, and resolve or explicitly document any that remain (also added `pnpm-workspace.yaml` `overrides.tar` since the repo's existing `package.json` `resolutions`/`overrides` blocks are non-functional under pnpm 11 — see design.md)
+
+## 4. Audit Verification
+
+- [x] 4.1 Run `pnpm audit --prod` and confirm 0 critical / 0 high advisories remain for packages listed in `package.json` `dependencies`
+- [x] 4.2 Document any remaining moderate/low or devDependencies-only advisories left open (out of scope per proposal.md Non-Goals) with a one-line reason each
+
+## 5. Behavioral Verification
+
+**RESOLVED**: `next-auth@4.24.15`'s missing `./core` export was fixed with a `nitro.alias` entry in `nuxt.config.ts` (`'next-auth/core': './node_modules/next-auth/core/index.js'`) — the file is physically present in the package, only blocked by its `package.json` `exports` map; Nitro's server-side module resolution honors the alias and bypasses the `exports` restriction without touching `next-auth` or `@sidebase/nuxt-auth` code. Verified: `pnpm dev`, full NextAuth credentials flow via `/api/auth/csrf` → `/api/auth/callback/credentials` → `/api/auth/session`, session returned `username: "johndoe"`, `fullName: "John Doe"`, `avatar`, `abilityRules: [{action: "manage", subject: "all"}]`, `role: "admin"` — exact shape match.
+
+- [x] 5.1 Run `pnpm dev`; log in via the credentials flow and confirm the session contains `username`, `fullName`, `avatar`, `abilityRules`, `role` (spec: dependency-security-baseline - auth provider requirement)
+
+**RESOLVED** (operator-approved mitigation): with 5.1's workaround applied, a second and unrelated defect surfaced. Any authenticated page that does not set an explicit `layout:` in `definePageMeta` (i.e. every dashboard/form/table/app page relying on default layout resolution) crashed SSR with `routeRulesMatcher is not a function` in Nuxt 4.5.2's `resolveLayoutName` (`nuxt/dist/app/composables/layout.js`, a `useLayout()` composable new in Nuxt 4.5.0). Reproduced on a fully clean `rm -rf node_modules && pnpm install --frozen-lockfile` (ruling out a corrupted local install), with a single resolved `vite@8.2.2`/`h3` version each. Confirmed NOT project-specific: `nuxt.config.ts` defines no `routeRules`, no page uses `defineRouteRules`, `/register` (explicit `layout: 'blank'`) rendered fine while `/dashboards/analytics`, `/pages/user-profile`, `/forms/checkbox` all 500'd identically. This is an apparent Nuxt 4.5.2 core defect (or Nuxt 4.5.2 + Vite 8 interaction defect), independent of every dependency this change targeted. Operator selected the mitigation: keep `nuxt@4.5.2` and add a `pages:extend` hook in `nuxt.config.ts` that defaults every page's `meta.layout` to `'default'` at build time (documented inline as a workaround, with removal criteria once the upstream bug is fixed). This makes explicit the same layout every page would have resolved to anyway — no behavior change, only avoids the broken runtime fallback path. Verified after the fix: `/dashboards/analytics` → `200`, `/login` (still `layout: 'blank'`, unaffected by the `??=` guard) → `200`.
+
+- [x] 5.2 Navigate to a `canNavigate`-gated route as a user lacking the required ability; confirm redirect to `not-authorized` (spec: ACL scenario - unauthorized route access) — verified: session with `abilityRules: [{action: "read", subject: "AclDemo"}]` hitting `/dashboards/analytics` → `302` to `/not-authorized`.
+- [x] 5.3 Navigate to a route with `meta.public` set, unauthenticated; confirm it loads without redirect (spec: ACL scenario - public route access) — verified: `/login`, `/register`, `/forgot-password` all `200` with no session cookie.
+- [x] 5.4 Confirm `nuxt.config.ts` still defines no `routeRules` after the bump (spec: route-rules case-insensitivity requirement) — confirmed via `grep -n routeRules nuxt.config.ts`, no match (only the workaround comment mentions the string).
+- [x] 5.5 Load the dashboard, one data-table view, and one form view; confirm no visual regression or console error from the Vuetify patch bump — verified: `/dashboards/crm` (200, full nav+content HTML), `/apps/user/list` (200, data table), `/forms/form-validation` (200), all render complete HTML with no embedded error markers.
+- [x] 5.6 Load the swiper demo page(s); confirm no console error and carousels render/interact correctly after the swiper major bump — corrected from the planned "10 routes": all swiper demos actually live on the single page `/extensions/swiper` (16 embedded `Demo Swiper*` components). Verified: `200`, 37 `swiper-container` + 49 `swiper-slide` elements present in rendered HTML, no error markers.
+
+## 6. Build & Lint
+
+- [x] 6.1 Run `pnpm build` and confirm it completes without new errors — required two additional fixes beyond the planned version bumps: (1) bumped `sass` `~1.76.0` → `^1.93.2` (this repo's `sass < 1.84.0` rejected `vuetify@3.13.2`'s `VRating.sass`, which introduced a stray SCSS-style semicolon in `.sass` indented syntax — a known Vuetify defect, `vuetifyjs/vuetify#22798`, fixed on the sass side by `dart-sass#2467` making semicolons optional in `.sass` files from `1.84.0`); (2) added `shamefullyHoist: true` to `pnpm-workspace.yaml` (this repo's `.npmrc` `shamefully-hoist=true` is no longer read by pnpm 11, which moved non-auth settings to `pnpm-workspace.yaml` — without it, `flatpickr` wasn't hoisted to the root `node_modules`, so `@use "flatpickr/dist/flatpickr.css"` in `AppDateTimePicker.vue` failed to resolve). Both documented in design.md. Final build succeeded: `.output/` generated, 35.1 MB (5.48 MB gzip), all API routes and pages built. Note: this VM is memory-constrained (~5-7 GB with active swap pressure from concurrent sessions) — the build's default Vite/rolldown parallelism triggered swap thrashing on the first two attempts; a clean memory state (swap fully cleared) was required before the build completed without intervention. Not a code defect, an environment resource constraint - unrelated to the dependency bumps themselves.
+- [x] 6.2 Run `pnpm lint`; fix only regressions directly introduced by this change (pre-existing lint debt stays out of scope) — `eslint --fix` exited `0`, no code files modified, no errors or warnings.
+
+## 7. Validation & PR
+
+- [x] 7.1 Run `openspec validate update-critical-dependencies-security --strict` and resolve any reported issues — passed clean, no issues.
+- [x] 7.2 Commit following the `write-commits` skill (Conventional Commits, `git commit -F`, gitlint-validated) — commit `6be1c61`, `fix(deps): patch critical/high security vulnerabilities in dependencies`, manually checked against `.gitlint` rules (title length, type, format) since `uvx`/gitlint-core was unavailable in this environment.
+- [x] 7.3 Open PR via `gh pr create --body-file <file>`, referencing `openspec/changes/update-critical-dependencies-security/`, summarizing what was verified in section 5 with actual observed results — https://github.com/rafael-quintero-ls/leadsales-agentic-platform/pull/1
+- [x] 7.4 Stop for CODEOWNER review per `CONTRIBUTING.md` - do not merge — PR left open, unmerged.
+
+## 8. Post-PR Fix: Layout Regression
+
+- [x] 8.1 Operator visually reviewed `pnpm dev` at `/login` after PR #1 was opened and found the page rendering with the full vertical-nav `default` layout instead of the intended blank auth layout — a regression this change's Behavioral Verification missed because it only checked HTTP status codes, not rendered layout/CSS. Root-caused: the `pages:extend` hook's `page.meta.layout ??= 'default'` always won because Nuxt's build-time `augmentPages` step does not extract `layout` from `definePageMeta` into `route.meta` by default (see design.md's "Follow-up correction"). Fixed by adding `experimental.extraPageMetaExtractionKeys: ['layout']` to `nuxt.config.ts`, so the hook now sees each page's real declared layout before applying its default.
+- [x] 8.2 Verified via rendered HTML class inspection (not just status code): `/login` → `layout-blank` (restored), `/register` → `layout-blank` (still correct), `/dashboards/analytics` (authenticated, no explicit layout) → `layout-vertical`/`default` (still correct, the original bug this change mitigates stays fixed).
+- [x] 8.3 Commit and push this follow-up fix to the same PR branch, updating the PR description if the fix changes reviewer-facing behavior — commit `bb1756b`, pushed to `fix/critical-dependency-security-update`, PR #1 updated automatically (same branch, no description change needed since the PR already documents the layout hook as a workaround).
+
+## 9. Post-PR Fix: Production Build Never Actually Ran
+
+- [x] 9.1 Operator asked to actually run the project for review, which prompted running `node .output/server/index.mjs` (not just `pnpm build`'s exit code) for the first time — surfacing that the production server never actually started. Fixed a chain of 4 distinct bugs: `next-auth/jwt` `ERR_UNSUPPORTED_DIR_IMPORT` (`nitro.alias`), `_interopRequireDefault$1`/`LRU$2`/`Yallist` "is not a function/constructor" across `@babel/runtime`, `lru-cache`, `yallist` (fixed together via `nitro.externals.inline` for next-auth's whole transitive CJS chain — see design.md), `_default.default is not a function` in `server/api/auth/[...].ts` (operator-approved 1-line code fix, removing a now-stale `.default` workaround), and `(0 , _hkdf.default) is not a function` in `@panva/hkdf` (fixed via `pnpm patch`, not an alias, once aliases proved incomplete across dev and prod — see design.md).
+- [x] 9.2 Verified end-to-end on the actual production artifact: `pnpm build` → `node .output/server/index.mjs` (with `AUTH_SECRET`/`AUTH_ORIGIN`/`NUXT_PUBLIC_API_BASE_URL` env set) → full NextAuth credentials login (`200`, session shape intact) → `/dashboards/analytics` renders `layout-wrapper layout-nav-type-vertical` → ACL-unauthorized session redirected `302` to `/not-authorized` → `/login` still renders `layout-wrapper layout-blank`.
+- [x] 9.3 Re-verified `pnpm dev` still works after all the above (the `@panva/hkdf` fix specifically needed to work in both dev and prod, since the first two alias attempts only fixed one or the other): full login flow `200`, session shape intact, `/login` and `/dashboards/analytics` both render their correct layout.
+- [x] 9.4 Re-ran `pnpm lint` after all fixes: found and fixed one real pre-existing rule conflict on `views/apps/user/view/UserTabAccount.vue` (unrelated to this change, left in a broken state by an earlier `--fix` run in this same session); confirmed the ~48-file import-reordering from repeated `pnpm lint --fix` runs this session is a no-op on behavior and left it applied, split into its own `style:` commit.
+- [x] 9.5 Commit and push: config/patch/code fixes as one commit, the incidental import-reordering as a separate `style:` commit, both to the same PR branch.
+
+## 10. Post-Review Fix: Client-Side Import Cycle
+
+- [x] 10.1 Operator reported "cannot get to the dashboard" after login in their real browser; console showed `Uncaught (in promise) ReferenceError: can't access lexical declaration '_routeRulesMatcher' before initialization` in `layout.js` — a client-side-only failure no curl/HTTP-status check in this session's prior verification could have caught. Root-caused against the upstream open issue `nuxt/nuxt#35982`: `app/router.options.ts`'s `/` redirect middleware statically called the auto-imported `useAuth()`, closing an import cycle through `#build/route-rules.mjs` → `router.options.mjs` → this file → `@sidebase/nuxt-auth` composables → back into `layout.js`/`manifest.js` (both of which also import `route-rules.mjs`). Fixed per the community-verified workaround: deferred `useAuth` (via `#imports`) and `callWithNuxt` (via `nuxt/app`, to preserve Nuxt context across the `await import()`) to dynamic imports inside the middleware callback instead of static module-scope imports.
+- [x] 10.2 Rebuilding to verify surfaced an unrelated, pre-existing build failure: `[MISSING_EXPORT] "manualResetRef"/"resolveRef" is not exported by @vueuse/core` — a real `@vueuse/core@10.11.1`/`@vueuse/nuxt@14.0.0` (itself pulling `@vueuse/core@14.0.0`) version split present since the initial commit, exposed once local caches (`.nuxt`, `node_modules/.cache`) were fully cleared rather than reused. Fixed by bumping `@vueuse/core`, `@vueuse/math`, `@vueuse/nuxt` all to `^14.4.0`, collapsing the tree to one version.
+- [x] 10.3 Verified end to end in both environments, following the actual redirect chain (not just isolated endpoint checks): `pnpm dev` and `pnpm build` + `node .output/server/index.mjs` both take a full login → `/` root redirect (role-based, via the now-dynamic `useAuth()` in `router.options.ts`) → `/dashboards/crm` render (`200`, correct `layout-nav-type-vertical`) → ACL-unauthorized session → `302` to `/not-authorized` → `/login` still `layout-blank`. `pnpm lint` exits `0`.
+- [x] 10.4 Commit and push both fixes to the same PR branch.

@@ -2,9 +2,9 @@
 import { animations, remapNodes } from '@formkit/drag-and-drop'
 import { dragAndDrop } from '@formkit/drag-and-drop/vue'
 import { VForm } from 'vuetify/components/VForm'
+import type { AddNewKanbanItem, EditKanbanItem, KanbanBoard, KanbanData, KanbanState, RenameKanbanBoard } from '@db/apps/kanban/types'
 import KanbanBoardEditDrawer from '@/views/apps/kanban/KanbanBoardEditDrawer.vue'
 import KanbanItems from '@/views/apps/kanban/KanbanItems.vue'
-import type { AddNewKanbanItem, EditKanbanItem, KanbanBoard, KanbanData, KanbanState, RenameKanbanBoard } from '@db/apps/kanban/types'
 
 const props = withDefaults(defineProps<{
   kanbanData: KanbanData

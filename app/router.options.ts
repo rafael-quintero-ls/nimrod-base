@@ -11,8 +11,21 @@ const redirects: RouteRecordRaw[] = [
     path: '/',
     name: 'index',
     meta: {
-      middleware: to => {
-        const { data: sessionData } = useAuth()
+      middleware: async to => {
+        // ℹ️ Dynamic import (not the auto-imported `useAuth` directly) to avoid a static
+        // top-level import cycle: `app/router.options.ts` is imported by the generated
+        // `#build/route-rules.mjs`, which `layout.js`/`manifest.js` also import — a static
+        // `useAuth` import here closes that cycle and the bundler emits `layout.js`'s
+        // `const routeRulesMatcher = _routeRulesMatcher` before route-rules.mjs runs,
+        // throwing "Cannot access '_routeRulesMatcher' before initialization" client-side.
+        // Confirmed as an upstream Nuxt 4.5.1+ regression (nuxt/nuxt#35982); the community
+        // workaround is exactly this - defer any composable/store import in this file to
+        // inside the callback that needs it. `useNuxtApp()` is captured before the `await`
+        // (which drops the active Nuxt instance context) and `callWithNuxt` restores it for
+        // the subsequent `useAuth()` call.
+        const nuxtApp = useNuxtApp()
+        const [{ useAuth }, { callWithNuxt }] = await Promise.all([import('#imports'), import('nuxt/app')])
+        const { data: sessionData } = await callWithNuxt(nuxtApp, useAuth)
 
         const userRole = sessionData.value?.user.role
 

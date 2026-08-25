@@ -5,9 +5,9 @@ import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
 import { useDisplay } from 'vuetify'
 import navImg from '@images/front-pages/misc/nav-item-col-img.png'
 
-import NavbarThemeSwitcher from '@/layouts/components/NavbarThemeSwitcher.vue'
 import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
 import { themeConfig } from '@themeConfig'
+import NavbarThemeSwitcher from '@/layouts/components/NavbarThemeSwitcher.vue'
 
 const props = defineProps({
   activeId: String,

@@ -1,0 +1,14 @@
+allowBuilds:
+  '@parcel/watcher': true
+  '@scarf/scarf': false
+  esbuild: true
+  unrs-resolver: true
+  vue-demi: true
+shamefullyHoist: true
+overrides:
+  postcss: ^8
+  '@tiptap/core': ^2
+  cookie: 1.0.2
+  tar: ^7.5.19
+patchedDependencies:
+  '@panva/hkdf': patches/@panva__hkdf.patch

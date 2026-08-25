@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AcademyMyCourses from '@/views/apps/academy/AcademyMyCourses.vue'
 import boyAppAcademy from '@images/illustrations/boy-app-academy.png'
 import girlAppAcademy from '@images/illustrations/girl-app-academy.png'
 import academyCourseIllustration1 from '@images/pages/academy-course-illustration1.png'
@@ -7,6 +6,7 @@ import academyCourseIllustration2Dark from '@images/pages/academy-course-illustr
 import academyCourseIllustration2Light from '@images/pages/academy-course-illustration2-light.png'
 import guitarCoursePoster from '@images/pages/guitar-course-poster.png'
 import singingCoursePoster from '@images/pages/singing-course-poster.png'
+import AcademyMyCourses from '@/views/apps/academy/AcademyMyCourses.vue'
 
 const academyCourseIllustration2 = useGenerateImageVariant(academyCourseIllustration2Light, academyCourseIllustration2Dark)
 

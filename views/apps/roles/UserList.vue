@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import AddNewUserDrawer from '@/views/apps/user/list/AddNewUserDrawer.vue'
 import type { UserProperties } from '@db/apps/users/types'
+import AddNewUserDrawer from '@/views/apps/user/list/AddNewUserDrawer.vue'
 
 // 👉 Store
 const searchQuery = ref('')

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import ECommerceAddCategoryDrawer from '@/views/apps/ecommerce/ECommerceAddCategoryDrawer.vue'
-
 import product1 from '@images/ecommerce-images/product-1.png'
 import product10 from '@images/ecommerce-images/product-10.png'
 import product11 from '@images/ecommerce-images/product-11.png'
@@ -12,6 +10,7 @@ import product2 from '@images/ecommerce-images/product-2.png'
 import product25 from '@images/ecommerce-images/product-25.png'
 import product28 from '@images/ecommerce-images/product-28.png'
 import product9 from '@images/ecommerce-images/product-9.png'
+import ECommerceAddCategoryDrawer from '@/views/apps/ecommerce/ECommerceAddCategoryDrawer.vue'
 
 const categoryData = ref([
   {
