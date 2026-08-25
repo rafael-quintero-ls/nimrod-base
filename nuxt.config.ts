@@ -4,6 +4,17 @@ import vuetify from 'vite-plugin-vuetify'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  // ℹ️ This repo keeps `pages/`, `middleware/`, `layouts/`, `components/`, `plugins/`, and
+  // `server/` at the repo root (Nuxt 3-style layout), not inside `app/`. Nuxt 4 auto-detects
+  // `srcDir: 'app'` whenever `app/` exists with content (here: `app/router.options.ts`,
+  // `app/auth.config.ts`) — left implicit, every `srcDir`-relative path (`imports.dirs`,
+  // file-based routing, layouts/middleware discovery, `vite.plugins.vuetify.styles.configFile`)
+  // silently resolves against `app/` instead of the repo root, breaking page discovery,
+  // composable auto-imports, and Vuetify's stylesheet resolution (all reproduced independently
+  // against `main`, not introduced by this change). Pinning `srcDir` to the repo root matches
+  // the actual file layout everywhere else in this repo.
+  srcDir: '.',
+
   app: {
     head: {
       titleTemplate: '%s - NuxtJS Admin Template',
@@ -32,9 +43,9 @@ export default defineNuxtConfig({
     https://nuxt.com/docs/guide/going-further/runtime-config
   */
   runtimeConfig: {
-    // Private keys are only available on the server
-    AUTH_ORIGIN: process.env.AUTH_ORIGIN,
-    AUTH_SECRET: process.env.AUTH_SECRET,
+    // Private: server-only, used by server/auth/rumbor-adapter.ts. Unset = demo-mode fixture
+    // data; set = proxy to rumbor-core's identity endpoint.
+    identityBackendUrl: process.env.NUXT_IDENTITY_BACKEND_URL,
 
     // Public keys that are exposed to the client.
     public: {
@@ -58,15 +69,6 @@ export default defineNuxtConfig({
     }],
   },
 
-  auth: {
-    baseURL: process.env.AUTH_ORIGIN,
-    globalAppMiddleware: false,
-
-    provider: {
-      type: 'authjs',
-    },
-  },
-
   plugins: [
     '@/plugins/casl/index.ts',
     '@/plugins/vuetify/index.ts',
@@ -74,7 +76,7 @@ export default defineNuxtConfig({
   ],
 
   imports: {
-    dirs: ['./@core/utils', './@core/composable/', './plugins/*/composables/*'],
+    dirs: ['@/@core/utils', '@/@core/composable/', '@/plugins/*/composables/*'],
   },
 
   /*
@@ -181,7 +183,12 @@ export default defineNuxtConfig({
       svgLoader(),
       vuetify({
         styles: {
-          configFile: 'assets/styles/variables/_vuetify.scss',
+          // ℹ️ Absolute path (not relative to Vite's `root`, which Nuxt 4 sets to `srcDir`/
+          // `app/` by convention) — a relative path here silently resolved against `app/`
+          // instead of the repo root, producing "Can't find stylesheet to import" for every
+          // Vuetify component style on every route (preexisting on `main`, not introduced by
+          // this change — reproduced there independently before this fix).
+          configFile: fileURLToPath(new URL('./assets/styles/variables/_vuetify.scss', import.meta.url)),
         },
       }),
     ],
@@ -189,50 +196,6 @@ export default defineNuxtConfig({
 
   build: {
     transpile: ['vuetify'],
-  },
-
-  nitro: {
-    alias: {
-      'next-auth/core': fileURLToPath(new URL('./node_modules/next-auth/core/index.js', import.meta.url)),
-      'next-auth/jwt': fileURLToPath(new URL('./node_modules/next-auth/jwt/index.js', import.meta.url)),
-    },
-
-    // ℹ️ Forces Nitro to bundle next-auth's transitive CJS dependency chain into the server
-    // output rather than leaving them as runtime external imports. Nitro's CJS-external-as-
-    // ESM-namespace-import handling breaks for plain-CJS packages under Vite 8/rolldown:
-    // externalizing them one at a time surfaced a chain of interop errors
-    // (`ERR_UNSUPPORTED_DIR_IMPORT` on `next-auth/jwt`, `_interopRequireDefault$1 is not a
-    // function` on `@babel/runtime/helpers/*`, `LRU$2 is not a constructor` on `lru-cache`,
-    // `Yallist is not a constructor` on `lru-cache`'s own dependency `yallist`). Every package
-    // in this list is CJS and reachable only through next-auth/@sidebase-nuxt-auth.
-    externals: {
-      inline: [
-        'next-auth',
-        '@babel/runtime',
-
-        // ℹ️ @panva/hkdf is deliberately NOT inlined here (kept as an external import). Its
-        // `dist/node/esm/index.js` build lacked the `__esModule` marker Babel's
-        // `_interopRequireDefault` (embedded in next-auth's own CJS build) checks for, so
-        // whichever module condition the bundler picked for this bare specifier — `import`
-        // in production, something else again in `pnpm dev`'s Vite-driven server bundling —
-        // `_interopRequireDefault` double-wrapped it and broke `hkdf(...)` at call time in
-        // exactly the way `sidebase/nuxt-auth#953` describes. Fixed at the source via a
-        // `pnpm patch` (`patches/@panva__hkdf.patch`) adding `export const __esModule = true`
-        // to that build, rather than aliasing to the CJS build — an alias only covers one
-        // bundling context (Nitro's production rollup) and left `pnpm dev` broken.
-        'jose',
-        'oauth',
-        'openid-client',
-        'preact',
-        'preact-render-to-string',
-        'uuid',
-        'lru-cache',
-        'yallist',
-        'object-hash',
-        'oidc-token-hash',
-        'cookie',
-      ],
-    },
   },
 
   compatibilityDate: '2025-07-15',
@@ -249,7 +212,16 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@nuxtjs/i18n',
     '@nuxtjs/device',
-    '@sidebase/nuxt-auth',
+    '@nuxtjs/better-auth',
     '@pinia/nuxt',
   ],
+
+  auth: {
+    // ℹ️ Explicit absolute paths, not the module's own `'server/auth.config'`/
+    // `'app/auth.config'` defaults — those default paths are resolved through internal
+    // per-layer heuristics that misbehave once `srcDir` is pinned to the repo root (see the
+    // `srcDir` comment above); absolute paths sidestep that resolution entirely.
+    serverConfig: fileURLToPath(new URL('./server/auth.config.ts', import.meta.url)),
+    clientConfig: fileURLToPath(new URL('./app/auth.config.ts', import.meta.url)),
+  },
 })

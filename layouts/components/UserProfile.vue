@@ -3,17 +3,11 @@ import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
 
 const ability = useAbility()
 
-// TODO: Get type from backend
-const userData = useCookie<any>('userData')
-
-const { signOut } = useAuth()
+const { user, signOut } = useUserSession()
 
 async function logout() {
   try {
-    await signOut({ redirect: false })
-
-    // Remove "userData" from cookie
-    userData.value = null
+    await signOut()
 
     // Reset user abilities
     ability.update([])
@@ -38,7 +32,7 @@ const userProfileList = [
 
 <template>
   <VBadge
-    v-if="userData"
+    v-if="user"
     dot
     bordered
     location="bottom right"
@@ -49,12 +43,12 @@ const userProfileList = [
     <VAvatar
       size="38"
       class="cursor-pointer"
-      :color="!(userData && userData.avatar) ? 'primary' : undefined"
-      :variant="!(userData && userData.avatar) ? 'tonal' : undefined"
+      :color="!user.image ? 'primary' : undefined"
+      :variant="!user.image ? 'tonal' : undefined"
     >
       <VImg
-        v-if="userData && userData.avatar"
-        :src="userData.avatar"
+        v-if="user.image"
+        :src="user.image"
       />
       <VIcon
         v-else
@@ -81,12 +75,12 @@ const userProfileList = [
                   bordered
                 >
                   <VAvatar
-                    :color="!(userData && userData.avatar) ? 'primary' : undefined"
-                    :variant="!(userData && userData.avatar) ? 'tonal' : undefined"
+                    :color="!user.image ? 'primary' : undefined"
+                    :variant="!user.image ? 'tonal' : undefined"
                   >
                     <VImg
-                      v-if="userData && userData.avatar"
-                      :src="userData.avatar"
+                      v-if="user.image"
+                      :src="user.image"
                     />
                     <VIcon
                       v-else
@@ -98,10 +92,10 @@ const userProfileList = [
 
               <div>
                 <h6 class="text-h6 font-weight-medium">
-                  {{ userData.fullName || userData.username }}
+                  {{ user.name }}
                 </h6>
                 <VListItemSubtitle class="text-capitalize text-disabled">
-                  {{ userData.role }}
+                  {{ user.role }}
                 </VListItemSubtitle>
               </div>
             </div>

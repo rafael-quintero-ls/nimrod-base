@@ -10,5 +10,3 @@ overrides:
   '@tiptap/core': ^2
   cookie: 1.0.2
   tar: ^7.5.19
-patchedDependencies:
-  '@panva/hkdf': patches/@panva__hkdf.patch

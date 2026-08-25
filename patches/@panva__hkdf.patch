@@ -1,9 +1,0 @@
-diff --git a/dist/node/esm/index.js b/dist/node/esm/index.js
-index 9eebb62c9c86c8cec702bb87902ec75627bc4bcc..e92e3f996e8523869e5340cff2a1bc2778863169 100644
---- a/dist/node/esm/index.js
-+++ b/dist/node/esm/index.js
-@@ -44,3 +44,4 @@ async function hkdf(digest, ikm, salt, info, keylen) {
-     return derive(normalizeDigest(digest), normalizeIkm(ikm), normalizeUint8Array(salt, 'salt'), normalizeInfo(info), normalizeKeylen(keylen, digest));
- }
- export { hkdf, hkdf as default };
-+export const __esModule = true;

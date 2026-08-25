@@ -1,8 +1,5 @@
 <!-- ❗Errors in the form are set on line 60 -->
 <script setup lang="ts">
-import type { NuxtError } from 'nuxt/app'
-import type { User } from 'next-auth'
-
 import { VForm } from 'vuetify/components/VForm'
 import { useGenerateImageVariant } from '@core/composable/useGenerateImageVariant'
 import authV2LoginIllustrationBorderedDark from '@images/pages/auth-v2-login-illustration-bordered-dark.png'
@@ -15,7 +12,7 @@ import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
 import { themeConfig } from '@themeConfig'
 import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
 
-const { signIn, data: sessionData } = useAuth()
+const { execute: signInEmail, status: signInStatus, error: signInError } = useSignIn('email')
 
 const authThemeImg = useGenerateImageVariant(authV2LoginIllustrationLight, authV2LoginIllustrationDark, authV2LoginIllustrationBorderedLight, authV2LoginIllustrationBorderedDark, true)
 
@@ -48,35 +45,27 @@ const credentials = ref({
 const rememberMe = ref(false)
 
 async function login() {
-  const response = await signIn('credentials', {
-    callbackUrl: '/',
-    redirect: false,
-    ...credentials.value,
+  errors.value = {}
+
+  await signInEmail({
+    email: credentials.value.email,
+    password: credentials.value.password,
+    rememberMe: rememberMe.value,
   })
 
   // If error is not null => Error is occurred
-  if (response && response.error) {
-    const apiStringifiedError = response.error
-    const apiError: NuxtError = JSON.parse(apiStringifiedError)
-
-    errors.value = apiError.data as Record<string, string | undefined>
+  if (signInStatus.value === 'error') {
+    errors.value = { email: signInError.value?.message ?? 'Invalid email or password' }
 
     // If err => Don't execute further
     return
   }
 
-  // Reset error on successful login
-  errors.value = {}
+  // Update client-held ability rules from the server-set cookie (see
+  // server/auth.config.ts's `after` hook, which writes it on every new session).
+  const userAbilityRules = useCookie<{ action: string; subject: string }[]>('userAbilityRules')
 
-  // Update user abilities
-  const { user } = sessionData.value!
-
-  useCookie<Partial<User>>('userData').value = user
-
-  // Save user abilities in cookie so we can retrieve it back on refresh
-  useCookie<User['abilityRules']>('userAbilityRules').value = user.abilityRules
-
-  ability.update(user.abilityRules ?? [])
+  ability.update(userAbilityRules.value ?? [])
 
   navigateTo(route.query.to ? String(route.query.to) : '/', { replace: true })
 }
