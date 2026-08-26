@@ -2,23 +2,22 @@ import { type CleanedWhere, createAdapterFactory } from 'better-auth/adapters'
 import { hashPassword } from 'better-auth/crypto'
 
 /**
- * better-auth database adapter that resolves users/sessions/accounts through
- * rumbor-core's identity contract, rather than a local database better-auth owns
- * directly.
+ * better-auth database adapter that resolves users/sessions/accounts through the identity
+ * backend's contract, rather than a local database better-auth owns directly.
  *
- * rumbor-core is still scaffold-only (no HTTP contract published yet — see
- * openspec/changes/migrate-better-auth/design.md, decision 3). Until
+ * The identity backend's HTTP contract has no published shape yet (see
+ * openspec/changes/archive/2026-08-25-migrate-better-auth/design.md, decision 3). Until
  * `NUXT_IDENTITY_BACKEND_URL` is set, this adapter serves a small in-memory fixture
  * (ported 1:1 from the removed `server/fake-db/auth/index.ts` demo users) so `pnpm dev`
  * keeps working through the migration. When the env var is set, every call proxies to
  * that URL instead.
  *
- * This file is the ONLY place in this repo allowed to know rumbor-core's concrete
+ * This file is the ONLY place in this repo allowed to know the identity backend's concrete
  * request/response shape — nothing outside it may reference that contract directly
  * (see AGENTS.md's "identity backend is not exposed through the public interface" rule).
  */
 
-interface RumborAdapterConfig {
+interface IdentityBackendAdapterConfig {
   identityBackendUrl?: string
 }
 
@@ -172,16 +171,16 @@ function matchesWhere(record: StoredRecord, where: CleanedWhere[]): boolean {
 
 let nextId = 1
 function generateId(): string {
-  return `rumbor_${Date.now()}_${nextId++}`
+  return `local_${Date.now()}_${nextId++}`
 }
 
-export const rumborAdapter = (config: RumborAdapterConfig = {}) => {
+export const identityBackendAdapter = (config: IdentityBackendAdapterConfig = {}) => {
   const identityBackendUrl = config.identityBackendUrl
 
   return createAdapterFactory({
     config: {
-      adapterId: 'rumbor-core',
-      adapterName: 'Rumbor Core Identity Adapter',
+      adapterId: 'identity-backend',
+      adapterName: 'Identity Backend Adapter',
       usePlural: false,
       debugLogs: false,
       supportsJSON: false,
@@ -190,11 +189,11 @@ export const rumborAdapter = (config: RumborAdapterConfig = {}) => {
       supportsNumericIds: false,
     },
     adapter: () => {
-      // ℹ️ Real-backend branch: proxies every call to rumbor-core's identity endpoint once
+      // ℹ️ Real-backend branch: proxies every call to the identity backend's endpoint once
       // it exists. The exact request/response shape is not yet published (see design.md's
       // Open Questions) — this issues a generic REST-ish call per model/operation, isolated
       // here so only this function needs to change once the real contract is confirmed.
-      async function proxyToRumborCore<T>(operation: string, payload: Record<string, unknown>): Promise<T> {
+      async function proxyToIdentityBackend<T>(operation: string, payload: Record<string, unknown>): Promise<T> {
         const response = await fetch(`${identityBackendUrl}/adapter/${payload.model}/${operation}`, {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
@@ -209,18 +208,18 @@ export const rumborAdapter = (config: RumborAdapterConfig = {}) => {
 
       if (identityBackendUrl) {
         return {
-          create: ({ model, data }) => proxyToRumborCore('create', { model, data }),
-          findOne: ({ model, where }) => proxyToRumborCore('findOne', { model, where }),
+          create: ({ model, data }) => proxyToIdentityBackend('create', { model, data }),
+          findOne: ({ model, where }) => proxyToIdentityBackend('findOne', { model, where }),
           findMany: ({ model, where, limit, sortBy, offset }) =>
-            proxyToRumborCore('findMany', { model, where, limit, sortBy, offset }),
-          update: ({ model, where, update }) => proxyToRumborCore('update', { model, where, update }),
-          updateMany: ({ model, where, update }) => proxyToRumborCore('updateMany', { model, where, update }),
-          delete: ({ model, where }) => proxyToRumborCore('delete', { model, where }),
-          deleteMany: ({ model, where }) => proxyToRumborCore('deleteMany', { model, where }),
-          consumeOne: ({ model, where }) => proxyToRumborCore('consumeOne', { model, where }),
+            proxyToIdentityBackend('findMany', { model, where, limit, sortBy, offset }),
+          update: ({ model, where, update }) => proxyToIdentityBackend('update', { model, where, update }),
+          updateMany: ({ model, where, update }) => proxyToIdentityBackend('updateMany', { model, where, update }),
+          delete: ({ model, where }) => proxyToIdentityBackend('delete', { model, where }),
+          deleteMany: ({ model, where }) => proxyToIdentityBackend('deleteMany', { model, where }),
+          consumeOne: ({ model, where }) => proxyToIdentityBackend('consumeOne', { model, where }),
           incrementOne: ({ model, where, increment, set }) =>
-            proxyToRumborCore('incrementOne', { model, where, increment, set }),
-          count: ({ model, where }) => proxyToRumborCore('count', { model, where }),
+            proxyToIdentityBackend('incrementOne', { model, where, increment, set }),
+          count: ({ model, where }) => proxyToIdentityBackend('count', { model, where }),
         }
       }
 

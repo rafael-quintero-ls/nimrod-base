@@ -43,8 +43,8 @@ export default defineNuxtConfig({
     https://nuxt.com/docs/guide/going-further/runtime-config
   */
   runtimeConfig: {
-    // Private: server-only, used by server/auth/rumbor-adapter.ts. Unset = demo-mode fixture
-    // data; set = proxy to rumbor-core's identity endpoint.
+    // Private: server-only, used by server/auth/identity-backend-adapter.ts. Unset = demo-mode
+    // fixture data; set = proxy to the identity backend's real endpoint.
     identityBackendUrl: process.env.NUXT_IDENTITY_BACKEND_URL,
 
     // Public keys that are exposed to the client.

@@ -1,9 +1,9 @@
 import { defineServerAuth } from '@nuxtjs/better-auth/config'
 import { createAuthMiddleware } from 'better-auth/api'
-import { rumborAdapter } from '@/server/auth/rumbor-adapter'
+import { identityBackendAdapter } from '@/server/auth/identity-backend-adapter'
 
 export default defineServerAuth(ctx => ({
-  database: rumborAdapter({
+  database: identityBackendAdapter({
     identityBackendUrl: ctx.runtimeConfig.identityBackendUrl,
   }),
 
