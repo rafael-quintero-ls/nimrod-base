@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import BillingHistoryTable from './BillingHistoryTable.vue'
 import mastercard from '@images/icons/payments/mastercard.png'
 import visa from '@images/icons/payments/visa.png'
 
@@ -494,11 +493,6 @@ const resetPaymentForm = () => {
           </VForm>
         </VCardText>
       </VCard>
-    </VCol>
-
-    <!-- 👉 Billing History -->
-    <VCol cols="12">
-      <BillingHistoryTable />
     </VCol>
   </VRow>
 </template>

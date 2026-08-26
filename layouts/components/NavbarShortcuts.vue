@@ -1,18 +1,6 @@
 <script setup lang="ts">
 const shortcuts = [
   {
-    icon: 'tabler-calendar',
-    title: 'Calendar',
-    subtitle: 'Appointments',
-    to: { name: 'apps-calendar' },
-  },
-  {
-    icon: 'tabler-file-dollar',
-    title: 'Invoice App',
-    subtitle: 'Manage Accounts',
-    to: { name: 'apps-invoice-list' },
-  },
-  {
     icon: 'tabler-user',
     title: 'Users',
     subtitle: 'Manage Users',
@@ -36,7 +24,6 @@ const shortcuts = [
     subtitle: 'Account Settings',
     to: { name: 'pages-account-settings-tab', params: { tab: 'account' } },
   },
-
 ]
 </script>
 

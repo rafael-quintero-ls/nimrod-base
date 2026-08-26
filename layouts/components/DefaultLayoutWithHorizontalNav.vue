@@ -8,7 +8,6 @@ import navItems from '@/navigation/horizontal'
 // Components
 import Footer from '@/layouts/components/Footer.vue'
 import NavBarNotifications from '@/layouts/components/NavBarNotifications.vue'
-import NavSearchBar from '@/layouts/components/NavSearchBar.vue'
 import NavbarShortcuts from '@/layouts/components/NavbarShortcuts.vue'
 import NavbarThemeSwitcher from '@/layouts/components/NavbarThemeSwitcher.vue'
 import UserProfile from '@/layouts/components/UserProfile.vue'
@@ -29,8 +28,6 @@ import UserProfile from '@/layouts/components/UserProfile.vue'
         </h1>
       </NuxtLink>
       <VSpacer />
-
-      <NavSearchBar trigger-btn-class="ms-lg-n3" />
 
       <NavBarI18n
         v-if="themeConfig.app.i18n.enable && themeConfig.app.i18n.langConfig?.length"

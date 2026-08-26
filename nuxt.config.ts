@@ -58,9 +58,6 @@ export default defineNuxtConfig({
       path: '@/@core/components',
       pathPrefix: false,
     }, {
-      path: '@/views/demos',
-      pathPrefix: false,
-    }, {
       path: '~/components/global',
       global: true,
     }, {

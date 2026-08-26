@@ -1,61 +1,24 @@
 export default [
   {
-    title: 'Dashboards',
+    title: 'Dashboard',
     icon: { icon: 'tabler-smart-home' },
-    children: [
-      {
-        title: 'Analytics',
-        to: 'dashboards-analytics',
-      },
-      {
-        title: 'CRM',
-        to: 'dashboards-crm',
-      },
-      {
-        title: 'Ecommerce',
-        to: 'dashboards-ecommerce',
-      },
-      {
-        title: 'Academy',
-        to: 'dashboards-academy',
-      },
-      {
-        title: 'Logistics',
-        to: 'dashboards-logistics',
-      },
-    ],
-    badgeContent: '5',
-    badgeClass: 'bg-error',
+    to: 'dashboards-analytics',
+    action: 'read',
+    subject: 'Dashboard',
   },
   {
-    title: 'Front Pages',
-    icon: { icon: 'tabler-files' },
+    title: 'Users',
+    icon: { icon: 'tabler-user' },
+    to: 'apps-user-list',
+    action: 'read',
+    subject: 'User',
+  },
+  {
+    title: 'Roles & Permissions',
+    icon: { icon: 'tabler-lock' },
     children: [
-      {
-        title: 'Landing',
-        to: 'front-pages-landing-page',
-        target: '_blank',
-      },
-      {
-        title: 'Pricing',
-        to: 'front-pages-pricing',
-        target: '_blank',
-      },
-      {
-        title: 'Payment',
-        to: 'front-pages-payment',
-        target: '_blank',
-      },
-      {
-        title: 'Checkout',
-        to: 'front-pages-checkout',
-        target: '_blank',
-      },
-      {
-        title: 'Help Center',
-        to: 'front-pages-help-center',
-        target: '_blank',
-      },
+      { title: 'Roles', to: 'apps-roles', action: 'read', subject: 'Role' },
+      { title: 'Permissions', to: 'apps-permissions', action: 'read', subject: 'Role' },
     ],
   },
 ]

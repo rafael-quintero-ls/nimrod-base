@@ -9,6 +9,11 @@ import AnalyticsSourceVisits from '@/views/dashboards/analytics/AnalyticsSourceV
 import AnalyticsSupportTracker from '@/views/dashboards/analytics/AnalyticsSupportTracker.vue'
 import AnalyticsTotalEarning from '@/views/dashboards/analytics/AnalyticsTotalEarning.vue'
 import AnalyticsWebsiteAnalytics from '@/views/dashboards/analytics/AnalyticsWebsiteAnalytics.vue'
+
+definePageMeta({
+  action: 'read',
+  subject: 'Dashboard',
+})
 </script>
 
 <template>

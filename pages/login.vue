@@ -205,19 +205,6 @@ const onSubmit = () => {
                 </VBtn>
               </VCol>
 
-              <!-- create account -->
-              <VCol
-                cols="12"
-                class="text-center"
-              >
-                <span>New on our platform?</span>
-                <NuxtLink
-                  class="text-primary ms-1"
-                  :to="{ name: 'register' }"
-                >
-                  Create an account
-                </NuxtLink>
-              </VCol>
               <VCol
                 cols="12"
                 class="d-flex align-center"

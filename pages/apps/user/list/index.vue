@@ -2,6 +2,11 @@
 import type { UserProperties } from '@db/apps/users/types'
 import AddNewUserDrawer from '@/views/apps/user/list/AddNewUserDrawer.vue'
 
+definePageMeta({
+  action: 'read',
+  subject: 'User',
+})
+
 // 👉 Store
 const searchQuery = ref('')
 const selectedRole = ref()

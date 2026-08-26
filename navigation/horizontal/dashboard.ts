@@ -1,34 +1,24 @@
 export default [
   {
-    title: 'Dashboards',
+    title: 'Dashboard',
     icon: { icon: 'tabler-smart-home' },
+    to: 'dashboards-analytics',
+    action: 'read',
+    subject: 'Dashboard',
+  },
+  {
+    title: 'Users',
+    icon: { icon: 'tabler-user' },
+    to: 'apps-user-list',
+    action: 'read',
+    subject: 'User',
+  },
+  {
+    title: 'Roles & Permissions',
+    icon: { icon: 'tabler-lock' },
     children: [
-      {
-        title: 'Analytics',
-        to: 'dashboards-analytics',
-        icon: { icon: 'tabler-chart-pie-2' },
-      },
-      {
-        title: 'CRM',
-        to: 'dashboards-crm',
-        icon: { icon: 'tabler-cube' },
-      },
-      {
-        title: 'Ecommerce',
-        to: 'dashboards-ecommerce',
-        icon: { icon: 'tabler-shopping-cart' },
-      },
-      {
-        title: 'Academy',
-        to: 'dashboards-academy',
-        icon: { icon: 'tabler-book' },
-      },
-      {
-        title: 'Logistics',
-        to: 'dashboards-logistics',
-        icon: { icon: 'tabler-truck' },
-      },
+      { title: 'Roles', to: 'apps-roles', action: 'read', subject: 'Role' },
+      { title: 'Permissions', to: 'apps-permissions', action: 'read', subject: 'Role' },
     ],
   },
-
 ]

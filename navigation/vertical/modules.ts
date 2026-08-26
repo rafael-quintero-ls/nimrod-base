@@ -1,0 +1,45 @@
+export default [
+  { heading: 'Roadmap' },
+  {
+    title: 'Agents',
+    icon: { icon: 'tabler-robot' },
+    to: 'agents',
+    action: 'read',
+    subject: 'Agent',
+  },
+  {
+    title: 'Workflows',
+    icon: { icon: 'tabler-git-branch' },
+    to: 'workflows',
+    action: 'read',
+    subject: 'Workflow',
+  },
+  {
+    title: 'Tools',
+    icon: { icon: 'tabler-tool' },
+    to: 'tools',
+    action: 'read',
+    subject: 'Tool',
+  },
+  {
+    title: 'Model Providers',
+    icon: { icon: 'tabler-brain' },
+    to: 'model-providers',
+    action: 'read',
+    subject: 'ModelProvider',
+  },
+  {
+    title: 'Context & Memory',
+    icon: { icon: 'tabler-database' },
+    to: 'memory',
+    action: 'read',
+    subject: 'Memory',
+  },
+  {
+    title: 'Observability',
+    icon: { icon: 'tabler-activity' },
+    to: 'observability',
+    action: 'read',
+    subject: 'Observability',
+  },
+]

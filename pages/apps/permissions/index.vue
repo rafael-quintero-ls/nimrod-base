@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import type { Permission } from '@db/apps/permission/types'
 
+definePageMeta({
+  action: 'read',
+  subject: 'Role',
+})
+
 const headers = [
   { title: 'Name', key: 'name' },
   { title: 'Assigned To', key: 'assignedTo', sortable: false },
