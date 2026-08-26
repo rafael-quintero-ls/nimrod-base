@@ -2,8 +2,7 @@
 
 > Mapa completo del sidebar: qué existe hoy (post `simplify-sidebar-navigation`) y qué
 > módulos futuros se suman, uno por uno, solo cuando cada uno tenga backend/contrato real
-> detrás — nunca como placeholder. Ver `docs/architecture/ecosystem-architecture.md` para
-> el modelo de contratos que sustenta cada módulo futuro.
+> detrás — nunca como placeholder.
 
 ## Esquema completo
 
@@ -92,8 +91,8 @@ algo que trazar.
 Un módulo entra al sidebar cuando:
 
 1. Su contrato (familia de la tabla) tiene un adapter concreto real implementado detrás
-   (intercambiable, nunca nombrado en la UI/rutas/config — mismo patrón que
-   `server/auth/rumbor-adapter.ts` para Identity Contract hoy).
+   (intercambiable, nunca nombrado en la UI/rutas/config — mismo patrón que ya usa hoy el
+   adapter de identidad de este repo).
 2. Tiene su propia capability en `openspec/specs/<módulo>/spec.md`, con su propio ciclo de
    proposal → design → approval-gate → implementación, igual que `auth`.
 3. Nunca se agrega nav apuntando a una página vacía o "coming soon" — viola el contrato de
@@ -101,4 +100,4 @@ Un módulo entra al sidebar cuando:
 
 Los nombres de módulo/ruta son de dominio (`agents`, `tools`, `observability`), nunca de
 proveedor o framework concreto — mantiene el sidebar agnóstico de qué implementación hay
-detrás, igual que el estándar abierto en `ecosystem-architecture.md`.
+detrás.
