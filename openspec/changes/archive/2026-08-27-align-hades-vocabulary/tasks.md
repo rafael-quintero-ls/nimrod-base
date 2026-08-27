@@ -34,11 +34,13 @@
 
 - [x] 5.1 Run an internal review pass over the doc diff (reviewer agent), per AGENTS.md step 11,
       before opening the implementation PR.
-- [ ] 5.2 Push branch `docs/hades-vocabulary-mapping`, open PR #2 (implementation PR), referencing
-      this OpenSpec change directory.
-- [ ] 5.3 Wait for CODEOWNER approval on PR #2.
-- [ ] 5.4 Once PR #2 is approved and before merging: re-run
-      `openspec validate align-hades-vocabulary --strict`, then
-      `openspec archive align-hades-vocabulary --yes`, commit the archive as the PR's final
-      commit, per AGENTS.md step 14.
-- [ ] 5.5 Merge PR #2 (human review, not the agent).
+- [x] 5.2 Pushed branch `docs/hades-vocabulary-mapping`, opened PR #2 (implementation PR),
+      referencing this OpenSpec change directory.
+- [x] 5.3 CODEOWNER approved and merged PR #2, 2026-08-27.
+- [x] 5.4 **Deviation from AGENTS.md step 14**: PR #2 was merged before the archive step ran
+      (archive is normally the PR's final commit, landing pre-merge). Ran
+      `openspec validate align-hades-vocabulary --strict` and
+      `openspec archive align-hades-vocabulary --yes` post-merge instead, on branch
+      `docs/archive-align-hades-vocabulary`, 2026-08-27, so the archived spec still lands in
+      `openspec/specs/` on `main`.
+- [x] 5.5 PR #2 merged (human review/merge, not the agent), 2026-08-27.
