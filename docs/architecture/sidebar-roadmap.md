@@ -63,10 +63,10 @@ Gris punteado = módulo futuro, entra solo cuando su contrato tenga adapter real
 | 9 | Roles & Permissions | ✅ Existe | `/apps/roles`, `/apps/permissions` | `auth` | Policy Contract *(+ Human Interaction Contract, futuro — como nuevo tipo de regla, no módulo aparte)* | — |
 
 **HADES primitive:** referencia cruzada al primitive/contrato correspondiente en la arquitectura
-HADES externa (ver `openspec/specs/hades-vocabulary-mapping/spec.md` una vez el change
-`align-hades-vocabulary` esté archivado). Es solo un nombre-objetivo para cuando ese módulo se
-implemente contra un backend HADES-aligned — no implica que el módulo, su contrato o su backend
-ya existan; el estado real de cada módulo sigue siendo el de la columna "Estado" de esta tabla.
+HADES externa (ver `openspec/specs/hades-vocabulary-mapping/spec.md`). Es solo un
+nombre-objetivo para cuando ese módulo se implemente contra un backend HADES-aligned — no
+implica que el módulo, su contrato o su backend ya existan; el estado real de cada módulo sigue
+siendo el de la columna "Estado" de esta tabla.
 
 **Nota de alcance:** este mapeo no convierte a nimrod en el Mission Control canónico de HADES.
 nimrod es la UI de control-plane de la célula Leadsales (Design Partner Cell) sobre `rumbor-core`
