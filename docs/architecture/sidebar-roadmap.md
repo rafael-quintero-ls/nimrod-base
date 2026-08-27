@@ -50,17 +50,29 @@ Gris punteado = módulo futuro, entra solo cuando su contrato tenga adapter real
 
 ## Detalle por módulo
 
-| # | Módulo | Estado | Ruta base | Capability OpenSpec | Contrato(s) que cubre |
-|---|---|---|---|---|---|
-| 1 | Dashboard | ✅ Existe | `/dashboards/analytics` | `dashboard` *(implícito, sin spec propio aún)* | — |
-| 2 | Agents | 🔲 Futuro | `/agents` | `agents` | Agent Contract, Agent Runtime Contract |
-| 3 | Workflows | 🔲 Futuro | `/workflows` | `workflows` | Workflow Contract |
-| 4 | Tools | 🔲 Futuro | `/tools` | `tools` | Tool Contract, Tool Execution Contract, Capability Contract |
-| 5 | Model Providers | 🔲 Futuro | `/model-providers` | `model-providers` | Model Provider Contract |
-| 6 | Context & Memory | 🔲 Futuro | `/memory` | `memory` | Context Contract, Memory Contract |
-| 7 | Observability | 🔲 Futuro | `/observability` | `observability` | Event Contract, Telemetry Contract, Evaluation Contract |
-| 8 | Users | ✅ Existe | `/apps/user/list` | `auth` | Identity Contract |
-| 9 | Roles & Permissions | ✅ Existe | `/apps/roles`, `/apps/permissions` | `auth` | Policy Contract *(+ Human Interaction Contract, futuro — como nuevo tipo de regla, no módulo aparte)* |
+| # | Módulo | Estado | Ruta base | Capability OpenSpec | Contrato(s) que cubre | HADES primitive |
+|---|---|---|---|---|---|---|
+| 1 | Dashboard | ✅ Existe | `/dashboards/analytics` | `dashboard` *(implícito, sin spec propio aún)* | — | — |
+| 2 | Agents | 🔲 Futuro | `/agents` | `agents` | Agent Contract, Agent Runtime Contract | Actor / Agent Runtime |
+| 3 | Workflows | 🔲 Futuro | `/workflows` | `workflows` | Workflow Contract | Workflow Engine |
+| 4 | Tools | 🔲 Futuro | `/tools` | `tools` | Tool Contract, Tool Execution Contract, Capability Contract | Tool/Capability Plane |
+| 5 | Model Providers | 🔲 Futuro | `/model-providers` | `model-providers` | Model Provider Contract | Model Gateway |
+| 6 | Context & Memory | 🔲 Futuro | `/memory` | `memory` | Context Contract, Memory Contract | CRANE |
+| 7 | Observability | 🔲 Futuro | `/observability` | `observability` | Event Contract, Telemetry Contract, Evaluation Contract | LENS |
+| 8 | Users | ✅ Existe | `/apps/user/list` | `auth` | Identity Contract | — |
+| 9 | Roles & Permissions | ✅ Existe | `/apps/roles`, `/apps/permissions` | `auth` | Policy Contract *(+ Human Interaction Contract, futuro — como nuevo tipo de regla, no módulo aparte)* | — |
+
+**HADES primitive:** referencia cruzada al primitive/contrato correspondiente en la arquitectura
+HADES externa (ver `openspec/specs/hades-vocabulary-mapping/spec.md` una vez el change
+`align-hades-vocabulary` esté archivado). Es solo un nombre-objetivo para cuando ese módulo se
+implemente contra un backend HADES-aligned — no implica que el módulo, su contrato o su backend
+ya existan; el estado real de cada módulo sigue siendo el de la columna "Estado" de esta tabla.
+
+**Nota de alcance:** este mapeo no convierte a nimrod en el Mission Control canónico de HADES.
+nimrod es la UI de control-plane de la célula Leadsales (Design Partner Cell) sobre `rumbor-core`
+— ver `openspec/changes/archive/2026-08-25-migrate-better-auth/proposal.md`. El mapeo solo evita
+que cada módulo futuro invente un nombre de contrato independiente cuando su backend termine
+siendo HADES-aligned.
 
 ## Orden de entrada (dependencias funcionales, no jerarquía de sidebar)
 

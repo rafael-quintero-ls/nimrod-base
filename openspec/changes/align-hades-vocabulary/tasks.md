@@ -4,27 +4,41 @@
 
 ## 2. Documentation
 
-- [ ] 2.1 Add a `HADES primitive` column to the module table in
+- [x] 2.1 Add a `HADES primitive` column to the module table in
       `docs/architecture/sidebar-roadmap.md` (additive, existing `Contrato(s) que cubre` column
       kept), mapping: Agents → Actor / Agent Runtime, Workflows → Workflow Engine, Tools →
       Tool/Capability Plane, Model Providers → Model Gateway, Context & Memory → CRANE,
       Observability → LENS. Dashboard/Users/Roles & Permissions get no HADES-primitive mapping
       (they are not HADES-specific concepts).
-- [ ] 2.2 Add a short note near the table (or in this capability's spec, cross-referenced) stating
+- [x] 2.2 Add a short note near the table (or in this capability's spec, cross-referenced) stating
       the boundary: nimrod is the Leadsales Design Partner Cell's control-plane UI over
       `rumbor-core`, not HADES's canonical Mission Control UI.
 
 ## 3. Validation
 
-- [ ] 3.1 `openspec validate align-hades-vocabulary --strict`
-- [ ] 3.2 Confirm `docs/architecture/sidebar-roadmap.md` renders correctly (table columns align,
+- [x] 3.1 `openspec validate align-hades-vocabulary --strict`
+- [x] 3.2 Confirm `docs/architecture/sidebar-roadmap.md` renders correctly (table columns align,
       mermaid diagrams unaffected) by reading the rendered file.
 
 ## 4. PR
 
-- [ ] 4.1 Commit only `openspec/changes/align-hades-vocabulary/` planning artifacts on
+- [x] 4.1 Commit only `openspec/changes/align-hades-vocabulary/` planning artifacts on
       `docs/openspec-align-hades-vocabulary`, per AGENTS.md Phase A.
-- [ ] 4.2 Open PR #1 — plan-only, title `docs(openspec): propose align-hades-vocabulary` —
+- [x] 4.2 Open PR #1 — plan-only, title `docs(openspec): propose align-hades-vocabulary` —
       referencing this change directory. No application code in this PR (the doc edit to
       `docs/architecture/sidebar-roadmap.md` in tasks 2.1-2.2 ships in the Phase B implementation
-      PR, once this plan is approved and merged, per AGENTS.md's two-PR split).
+      PR, once this plan is approved and merged, per AGENTS.md's two-PR split). Merged as PR #1,
+      2026-08-27.
+
+## 5. Implementation PR (Phase B)
+
+- [x] 5.1 Run an internal review pass over the doc diff (reviewer agent), per AGENTS.md step 11,
+      before opening the implementation PR.
+- [ ] 5.2 Push branch `docs/hades-vocabulary-mapping`, open PR #2 (implementation PR), referencing
+      this OpenSpec change directory.
+- [ ] 5.3 Wait for CODEOWNER approval on PR #2.
+- [ ] 5.4 Once PR #2 is approved and before merging: re-run
+      `openspec validate align-hades-vocabulary --strict`, then
+      `openspec archive align-hades-vocabulary --yes`, commit the archive as the PR's final
+      commit, per AGENTS.md step 14.
+- [ ] 5.5 Merge PR #2 (human review, not the agent).
