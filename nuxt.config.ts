@@ -47,6 +47,10 @@ export default defineNuxtConfig({
     // fixture data; set = proxy to the identity backend's real endpoint.
     identityBackendUrl: process.env.NUXT_IDENTITY_BACKEND_URL,
 
+    // Private: server-only, used by server/agents/agent-runtime-adapter.ts. Unset = fixture
+    // data; set = proxy to the agent runtime backend's real endpoint.
+    agentRuntimeUrl: process.env.NUXT_AGENT_RUNTIME_URL,
+
     // Public keys that are exposed to the client.
     public: {
       apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL || '/api',
