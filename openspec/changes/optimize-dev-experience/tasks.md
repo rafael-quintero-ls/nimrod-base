@@ -94,9 +94,9 @@
       Found and fixed one real bug: `vue-shepherd` (devDependency) and its dangling
       `shims.d.ts` module declaration were left behind despite the shepherd family being
       otherwise fully removed — both removed, `pnpm install` re-run, -2 more packages.
-- [ ] 8.4 Push and open the implementation PR, referencing this OpenSpec change directory, with
+- [x] 8.4 Push and open the implementation PR, referencing this OpenSpec change directory, with
       the before/after measurements from tasks 2.3, 3.4, and 5.2-5.4 in the PR description.
-- [ ] 8.5 Wait for CODEOWNER approval.
+      Opened as PR #9.
 - [ ] 8.6 Before merging: `openspec validate optimize-dev-experience --strict`, then
       `openspec archive optimize-dev-experience --yes`, committed as the PR's final commit
       (before merge, not after).
