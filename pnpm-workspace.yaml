@@ -7,6 +7,5 @@ allowBuilds:
 shamefullyHoist: true
 overrides:
   postcss: ^8
-  '@tiptap/core': ^2
   cookie: 1.0.2
   tar: ^7.5.19
