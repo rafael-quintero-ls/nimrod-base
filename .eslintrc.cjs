@@ -127,7 +127,6 @@ module.exports = {
     'import/no-unresolved': [2, {
       ignore: [
         '~pages$',
-        'virtual:meta-layouts',
         '#auth$',
         '#components$',
 
