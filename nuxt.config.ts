@@ -55,6 +55,13 @@ export default defineNuxtConfig({
     public: {
       apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL || '/api',
       mapboxAccessToken: process.env.MAPBOX_ACCESS_TOKEN,
+
+      // Read by @nuxtjs/better-auth for deterministic OAuth callbacks and origin checks —
+      // unset falls back to inferring the origin from each request, which is non-deterministic
+      // across ports/domains (see https://better-auth.nuxt.dev/getting-started/configuration).
+      // No OAuth providers are configured yet, so this has no observable auth behavior change
+      // today; it fixes the "Using inferred baseURL" warning and prepares for OAuth/self-host.
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
     },
   },
   components: {
