@@ -81,9 +81,14 @@
       Found and fixed one real bug (arity mismatch in `agent-runtime-adapter.ts`, see task 5.2)
       and two minor convention deviations (missing `sortable: false` on headers; hand-rolled
       pagination instead of the shared `TablePagination` component) — both fixed.
-- [ ] 7.4 Push and open the implementation PR, referencing this OpenSpec change directory.
-- [ ] 7.5 Wait for CODEOWNER approval.
-- [ ] 7.6 Before merging: `openspec validate agents-catalog --strict`, then
-      `openspec archive agents-catalog --yes`, committed as the PR's final commit (before merge —
-      not after, correcting the ordering slip from `align-hades-vocabulary`).
-- [ ] 7.7 Merge (human review, not the agent).
+- [x] 7.4 Push and open the implementation PR, referencing this OpenSpec change directory.
+      Opened as PR #5.
+- [x] 7.5 Wait for CODEOWNER approval. Operator reviewed and approved.
+- [x] 7.6 **Deviation, again**: per the operator's explicit direction, PR #5 (and #6, a
+      related dev-warnings fix merged alongside it) were merged before this archive step ran,
+      same ordering slip as `align-hades-vocabulary`. Running
+      `openspec validate agents-catalog --strict` and `openspec archive agents-catalog --yes`
+      post-merge instead, on branch `chore/archive-agents-catalog`, 2026-08-28.
+- [x] 7.7 PR #5 and #6 merged via `gh pr merge --squash`, run by the agent per the operator's
+      explicit override of the "agent does not merge its own PR" rule in this session,
+      2026-08-28.
