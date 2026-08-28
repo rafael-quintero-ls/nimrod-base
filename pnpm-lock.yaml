@@ -218,9 +218,6 @@ importers:
       vite:
         specifier: ^8.2.2
         version: 8.2.2(@types/node@24.10.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.103.1)(terser@5.44.0)(tsx@4.20.6)(yaml@2.9.0)
-      vite-plugin-vue-meta-layouts:
-        specifier: ^0.6.1
-        version: 0.6.1(vite@8.2.2(@types/node@24.10.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.103.1)(terser@5.44.0)(tsx@4.20.6)(yaml@2.9.0))(vue-router@5.2.0(@vue/compiler-sfc@3.5.41)(esbuild@0.28.2)(pinia@3.0.3(typescript@5.9.3)(vue@3.5.41(typescript@5.9.3)))(rolldown@1.2.5)(rollup@4.62.5)(vite@8.2.2(@types/node@24.10.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.103.1)(terser@5.44.0)(tsx@4.20.6)(yaml@2.9.0))(vue@3.5.41(typescript@5.9.3)))
       vite-plugin-vuetify:
         specifier: 2.1.3
         version: 2.1.3(supports-color@10.2.2)(vite@8.2.2(@types/node@24.10.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.103.1)(terser@5.44.0)(tsx@4.20.6)(yaml@2.9.0))(vue@3.5.41(typescript@5.9.3))(vuetify@3.13.2)
@@ -6212,12 +6209,6 @@ packages:
     peerDependenciesMeta:
       '@nuxt/kit':
         optional: true
-
-  vite-plugin-vue-meta-layouts@0.6.1:
-    resolution: {integrity: sha512-CVvieEPGhgGA1lf/wlalGF7HNByjMrjV37ENziYe9VkyoeiU21+xOjqnxJ3J/P9Yy/VS1f19pvFRMY7IfAAeKg==}
-    peerDependencies:
-      vite: '>=2.0.0'
-      vue-router: '>=4.0.14'
 
   vite-plugin-vue-tracer@1.5.0:
     resolution: {integrity: sha512-G2aQ676fLBPnYhRi5lsARoL4hbtc/sx6fVzO7p44AB+1xQXo2UuiRgv7K26UdijrNzmuQprmJ121n3rdjBk1CA==}
@@ -13394,12 +13385,6 @@ snapshots:
       vite-dev-rpc: 2.0.0(vite@8.2.2(@types/node@24.10.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.103.1)(terser@5.44.0)(tsx@4.20.6)(yaml@2.9.0))
     optionalDependencies:
       '@nuxt/kit': 4.5.2(magic-string@1.2.2)(magicast@0.5.4)(rolldown@1.2.5)(unplugin@3.3.0(esbuild@0.28.2)(rolldown@1.2.5)(rollup@4.62.5)(vite@8.2.2(@types/node@24.10.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.103.1)(terser@5.44.0)(tsx@4.20.6)(yaml@2.9.0)))
-
-  vite-plugin-vue-meta-layouts@0.6.1(vite@8.2.2(@types/node@24.10.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.103.1)(terser@5.44.0)(tsx@4.20.6)(yaml@2.9.0))(vue-router@5.2.0(@vue/compiler-sfc@3.5.41)(esbuild@0.28.2)(pinia@3.0.3(typescript@5.9.3)(vue@3.5.41(typescript@5.9.3)))(rolldown@1.2.5)(rollup@4.62.5)(vite@8.2.2(@types/node@24.10.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.103.1)(terser@5.44.0)(tsx@4.20.6)(yaml@2.9.0))(vue@3.5.41(typescript@5.9.3))):
-    dependencies:
-      local-pkg: 0.5.1
-      vite: 8.2.2(@types/node@24.10.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.103.1)(terser@5.44.0)(tsx@4.20.6)(yaml@2.9.0)
-      vue-router: 5.2.0(@vue/compiler-sfc@3.5.41)(esbuild@0.28.2)(pinia@3.0.3(typescript@5.9.3)(vue@3.5.41(typescript@5.9.3)))(rolldown@1.2.5)(rollup@4.62.5)(vite@8.2.2(@types/node@24.10.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.103.1)(terser@5.44.0)(tsx@4.20.6)(yaml@2.9.0))(vue@3.5.41(typescript@5.9.3))
 
   vite-plugin-vue-tracer@1.5.0(vite@8.2.2(@types/node@24.10.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.103.1)(terser@5.44.0)(tsx@4.20.6)(yaml@2.9.0))(vue@3.5.41(typescript@5.9.3)):
     dependencies:

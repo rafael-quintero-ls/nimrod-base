@@ -109,3 +109,46 @@ not just READMEs):
   corners on measurement rigor "since it's just a spike." Mitigated by reusing
   `optimize-dev-experience`'s exact measurement methodology (clean-cache restart, `curl` timing,
   before/after numbers) rather than an informal "it feels faster" judgment.
+
+## Finding (post-implementation — this section added after the spike ran)
+
+**No-adopt.** Two independent, decisive blockers, both confirmed by direct evidence (bundle
+output, process behavior), not inference:
+
+1. **Alias resolution is structurally broken for this repo's naming convention.** This repo's
+   top-level `alias` block (`@core`, `@layouts`, `@images`, `@styles`, `@configured-variables`,
+   `@db`, `@api-utils` — all bare `@name`, no path segment after it) is used pervasively across
+   the entire codebase — every `.vue`/`.ts` file that imports from `@core/...` or `@layouts/...`
+   depends on it. Under `@nuxt/rspack-builder`, reading the generated SSR bundle
+   (`.nuxt/dist/server/server.dev.mjs`) directly showed: `import * as
+   __rspack_external__core_146eae07 from "@core"` — Rspack treats a bare `@name` alias as an
+   external npm scoped-package specifier, not an internal path alias, because that's exactly
+   what a real npm scope (`@scope/package`) looks like syntactically. Every request failed with
+   `500 Invalid module "@core" is not a valid package name`. This is not a missing config flag —
+   fixing it would mean renaming every alias in the codebase to a form Rspack won't confuse with
+   an npm scope (e.g. adding a trailing slash convention or dropping the `@` prefix entirely), a
+   large, invasive, repo-wide rename with its own separate risk profile, undertaken on the
+   unverified assumption that no further Rspack-specific blocker exists behind it.
+2. **Cold start was slower, not faster, in this environment** — 59.5s and 77.1s across two
+   attempts, against a 52.2s Vite baseline (same clean-cache methodology). The first attempt also
+   crashed silently (no exit code) partway through, with memory jumping from under 400MB free to
+   4.8GB free the instant the process died — consistent with an OOM kill in this session's
+   memory-constrained VM, though `dmesg` evidence could not be captured to confirm it directly.
+3. **Secondary, independently real finding**: installing `@nuxt/rspack-builder` introduced a
+   second, differently-peer-resolved copy of the `nuxt` package into `node_modules/.pnpm`,
+   which broke `pnpm`'s bin-name conflict resolution — `node_modules/.bin/nuxt` and `nuxi` were
+   silently renamed to `nuxt-cli`/`nuxi-ng`, breaking `pnpm dev`/`pnpm build` entirely
+   (`sh: 1: nuxt: not found`) until worked around by invoking
+   `node_modules/@nuxt/cli/bin/nuxi.mjs` directly. `pnpm dedupe` reduced the duplication but did
+   not eliminate it. This alone would need resolving before Rspack could be a usable day-to-day
+   builder for this repo, independent of the alias-resolution blocker.
+
+`vuetifyjs/nuxt-module#381`'s cascade-order symptom (design.md's original Risk) was never
+reached — the SSR 500 blocked every attempt to render a page at all, so there was nothing to
+visually re-check for style-order flakiness.
+
+Per this document's Decisions above, the spike branch's Rspack-switch portion (tasks 4-6) was
+discarded: `nuxt.config.ts` reverted, the local `modules/rspack-spike.ts` module deleted, added
+packages removed, and a full clean `node_modules` reinstall run to confirm `pnpm dev`/
+`pnpm build`/`vue-tsc --noEmit`/`eslint` all work exactly as they did before this spike began.
+Only the unconditional `vite-plugin-vue-meta-layouts` cleanup (task 3) is retained.
