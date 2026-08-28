@@ -28,8 +28,11 @@ export default defineNuxtConfig({
     },
   },
 
+  // ℹ️ Disabled by default — devtools' own module setup adds meaningful cost to every dev
+  // boot (observed ~16s in this environment). Set NUXT_DEVTOOLS=true to re-enable for a
+  // specific debugging session (component inspector, timeline, module graph UI).
   devtools: {
-    enabled: true,
+    enabled: process.env.NUXT_DEVTOOLS === 'true',
   },
 
   css: [
@@ -79,12 +82,22 @@ export default defineNuxtConfig({
 
   plugins: [
     '@/plugins/casl/index.ts',
+    '@/plugins/i18n/index.ts',
     '@/plugins/vuetify/index.ts',
     '@/plugins/iconify/index.ts',
   ],
 
   imports: {
     dirs: ['@/@core/utils', '@/@core/composable/', '@/plugins/*/composables/*'],
+
+    // ℹ️ Auto-import useI18n now that @nuxtjs/i18n (which provided this by default) is
+    // replaced by plain vue-i18n + plugins/i18n/index.ts — see that plugin's header comment.
+    presets: [
+      {
+        from: 'vue-i18n',
+        imports: ['useI18n'],
+      },
+    ],
   },
 
   /*
@@ -208,17 +221,8 @@ export default defineNuxtConfig({
 
   compatibilityDate: '2025-07-15',
 
-  i18n: {
-    vueI18n: '../i18n.config.ts',
-
-    bundle: {
-      optimizeTranslationDirective: true,
-    },
-  },
-
   modules: [
     '@vueuse/nuxt',
-    '@nuxtjs/i18n',
     '@nuxtjs/device',
     '@nuxtjs/better-auth',
     '@pinia/nuxt',

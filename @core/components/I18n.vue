@@ -11,6 +11,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const { locale } = useI18n({ useScope: 'global' })
+const { $setLocale } = useNuxtApp()
 </script>
 
 <template>
@@ -34,7 +35,7 @@ const { locale } = useI18n({ useScope: 'global' })
           v-for="lang in props.languages"
           :key="lang.i18nLang"
           :value="lang.i18nLang"
-          @click="locale = lang.i18nLang"
+          @click="$setLocale(lang.i18nLang)"
         >
           <!-- Language label -->
           <VListItemTitle>
