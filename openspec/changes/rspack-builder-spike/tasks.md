@@ -126,10 +126,10 @@
       Confirmed correct: cleanup-only diff (5 files), `nuxt.config.ts` zero-diff, no leftover
       Rspack artifacts anywhere, `pnpm dev`/`pnpm build`/`vue-tsc`/`eslint` independently
       re-verified working. No defects found.
-- [ ] 10.4 Open a PR containing **only** task 3's unconditional cleanup if the finding is
+- [x] 10.4 Open a PR containing **only** task 3's unconditional cleanup if the finding is
       no-adopt (per task 8.2), or state the adopt finding and point to a fresh follow-up change
       if adopt/adopt-with-follow-up (per task 8.3) — never merge the Rspack-switch portion itself
-      through this PR.
+      through this PR. Opened as PR #11.
 - [ ] 10.5 Wait for CODEOWNER approval.
 - [ ] 10.6 Before merging: `openspec validate rspack-builder-spike --strict`, then
       `openspec archive rspack-builder-spike --yes`, committed as the PR's final commit (before
