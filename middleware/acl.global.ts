@@ -1,4 +1,4 @@
-import { canNavigate } from '@layouts/plugins/casl'
+import { canNavigate } from '#layouts/plugins/casl'
 
 export default defineNuxtRouteMiddleware(to => {
   /*

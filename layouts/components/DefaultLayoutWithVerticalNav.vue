@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { themeConfig } from '@themeConfig'
-import NavBarI18n from '@core/components/I18n.vue'
-import { VerticalNavLayout } from '@layouts'
+import NavBarI18n from '#core/components/I18n.vue'
+import { VerticalNavLayout } from '#layouts'
 import navItems from '@/navigation/vertical'
 
 // Components

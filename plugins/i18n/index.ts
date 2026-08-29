@@ -14,7 +14,7 @@
  * `useI18n` is auto-imported from `vue-i18n` directly (see nuxt.config.ts's `imports.presets`).
  */
 import { createI18n } from 'vue-i18n'
-import { cookieRef } from '@layouts/stores/config'
+import { cookieRef } from '#layouts/stores/config'
 import { themeConfig } from '@themeConfig'
 
 const localeLoaders: Record<string, () => Promise<{ default: Record<string, unknown> }>> = {

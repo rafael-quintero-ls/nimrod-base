@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-import { layoutConfig } from '@layouts'
-import { can } from '@layouts/plugins/casl'
-import { useLayoutConfigStore } from '@layouts/stores/config'
-import type { NavLink } from '@layouts/types'
+import { layoutConfig } from '#layouts'
+import { can } from '#layouts/plugins/casl'
+import { useLayoutConfigStore } from '#layouts/stores/config'
+import type { NavLink } from '#layouts/types'
 import {
   getComputedNavLinkToProp,
   getDynamicI18nProps,
   isNavLinkActive,
-} from '@layouts/utils'
+} from '#layouts/utils'
 import { NuxtLink } from '#components'
 
 defineProps<{

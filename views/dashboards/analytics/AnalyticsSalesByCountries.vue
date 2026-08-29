@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import auFlag from '@images/icons/countries/au.png'
-import brFlag from '@images/icons/countries/br.png'
-import cnFlag from '@images/icons/countries/cn.png'
-import frFlag from '@images/icons/countries/fr.png'
-import inFlag from '@images/icons/countries/in.png'
-import usFlag from '@images/icons/countries/us.png'
+import auFlag from '#images/icons/countries/au.png'
+import brFlag from '#images/icons/countries/br.png'
+import cnFlag from '#images/icons/countries/cn.png'
+import frFlag from '#images/icons/countries/fr.png'
+import inFlag from '#images/icons/countries/in.png'
+import usFlag from '#images/icons/countries/us.png'
 
 const salesByCountries = [
   {

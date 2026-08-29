@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { VIcon } from 'vuetify/components/VIcon'
-import sliderBar1 from '@images/illustrations/sidebar-pic-1.png'
-import sliderBar2 from '@images/illustrations/sidebar-pic-2.png'
-import sliderBar3 from '@images/illustrations/sidebar-pic-3.png'
+import sliderBar1 from '#images/illustrations/sidebar-pic-1.png'
+import sliderBar2 from '#images/illustrations/sidebar-pic-2.png'
+import sliderBar3 from '#images/illustrations/sidebar-pic-3.png'
 
 const websiteAnalytics = [
   {

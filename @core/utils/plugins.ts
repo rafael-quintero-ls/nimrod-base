@@ -25,7 +25,7 @@ import type { App } from 'vue'
  * All you have to do is use this helper function in `main.ts` file like below:
  * ```ts
  * // File: src/main.ts
- * import { registerPlugins } from '@core/utils/plugins'
+ * import { registerPlugins } from '#core/utils/plugins'
  * import { createApp } from 'vue'
  * import App from '@/App.vue'
  *

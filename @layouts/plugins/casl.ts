@@ -1,6 +1,6 @@
 import { useAbility } from '@casl/vue'
 import type { RouteLocationNormalized } from 'vue-router'
-import type { NavGroup } from '@layouts/types'
+import type { NavGroup } from '#layouts/types'
 
 /**
  * Returns ability result if ACL is configured or else just return true

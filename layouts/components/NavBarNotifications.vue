@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import type { Notification } from '@layouts/types'
+import type { Notification } from '#layouts/types'
 
-import avatar3 from '@images/avatars/avatar-3.png'
-import avatar4 from '@images/avatars/avatar-4.png'
-import avatar5 from '@images/avatars/avatar-5.png'
-import paypal from '@images/cards/paypal-rounded.png'
+import avatar3 from '#images/avatars/avatar-3.png'
+import avatar4 from '#images/avatars/avatar-4.png'
+import avatar5 from '#images/avatars/avatar-5.png'
+import paypal from '#images/cards/paypal-rounded.png'
 
 const notifications = ref<Notification[]>([
   {

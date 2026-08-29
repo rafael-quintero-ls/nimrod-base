@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import home from '@images/svg/home.svg'
-import office from '@images/svg/office.svg'
+import home from '~icons/svg-icons/home'
+import office from '~icons/svg-icons/office'
 
 interface BillingAddress {
   firstName: string | undefined

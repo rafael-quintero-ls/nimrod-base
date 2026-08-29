@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import pages401 from '@images/pages/401.png'
-import miscMaskDark from '@images/pages/misc-mask-dark.png'
-import miscMaskLight from '@images/pages/misc-mask-light.png'
+import pages401 from '#images/pages/401.png'
+import miscMaskDark from '#images/pages/misc-mask-dark.png'
+import miscMaskLight from '#images/pages/misc-mask-light.png'
 
-import { useGenerateImageVariant } from '@core/composable/useGenerateImageVariant'
+import { useGenerateImageVariant } from '#core/composable/useGenerateImageVariant'
 
 definePageMeta({
   alias: '/pages/misc/not-authorized',

@@ -1,6 +1,6 @@
-import { AppContentLayoutNav, NavbarType } from '@layouts/enums'
-import { injectionKeyIsVerticalNavHovered } from '@layouts/symbols'
-import { _setDirAttr } from '@layouts/utils'
+import { AppContentLayoutNav, NavbarType } from '#layouts/enums'
+import { injectionKeyIsVerticalNavHovered } from '#layouts/symbols'
+import { _setDirAttr } from '#layouts/utils'
 
 // ℹ️ We should not import themeConfig here but in urgency we are doing it for now
 import { layoutConfig } from '@themeConfig'

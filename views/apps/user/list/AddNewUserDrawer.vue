@@ -3,7 +3,7 @@ import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
 
 import type { VForm } from 'vuetify/components/VForm'
 
-import type { UserProperties } from '@db/apps/users/types'
+import type { UserProperties } from '#db/apps/users/types'
 
 interface Emit {
   (e: 'update:isDrawerOpen', value: boolean): void
