@@ -356,8 +356,17 @@
 - [x] 9.1 Branch `feat/rspack-builder` from the tip of `main` (after PR #12
       merged).
 - [x] 9.2 Implemented tasks 2-7.
-- [ ] 9.3 Run an internal review pass over the diff (reviewer agent) before
-      opening any PR.
+- [x] 9.3 Ran an internal review pass over the diff (reviewer agent).
+      Confirmed correct on all 7 checklist points: zero remaining bare
+      `@name` imports, all 7 aliases dual-registered correctly, all 15
+      SVG-as-icon sites migrated, `modules/rspack-vite-replacements.ts`'s
+      registration logic and `rspack:config` patches mechanically sound,
+      `vuetifyStyles: {}` gap accurately documented, `package.json`
+      cleanup precise (no accidental touch of unrelated
+      `vite-plugin-vue-meta-layouts`). Independently re-ran `pnpm dev`
+      under both builders after clean cache: both returned real
+      `HTTP 200`, byte-identical 65566-byte bodies, zero errors. No
+      defects found.
 - [ ] 9.4 Open a PR reflecting the adopt finding (task 7.5), including the
       two open follow-up items (4.5a, 5.3b) explicitly in the PR
       description, not just this `tasks.md`.
