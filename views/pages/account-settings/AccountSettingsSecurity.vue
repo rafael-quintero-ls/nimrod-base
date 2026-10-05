@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import laptopGirl from '@images/illustrations/laptop-girl.png'
+import laptopGirl from '#images/illustrations/laptop-girl.png'
 
 const isCurrentPasswordVisible = ref(false)
 const isNewPasswordVisible = ref(false)

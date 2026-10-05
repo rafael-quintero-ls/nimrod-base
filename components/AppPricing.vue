@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import safeBoxWithGoldenCoin from '@images/misc/3d-safe-box-with-golden-dollar-coins.png'
-import spaceRocket from '@images/misc/3d-space-rocket-with-smoke.png'
-import dollarCoinPiggyBank from '@images/misc/dollar-coins-flying-pink-piggy-bank.png'
+import safeBoxWithGoldenCoin from '#images/misc/3d-safe-box-with-golden-dollar-coins.png'
+import spaceRocket from '#images/misc/3d-space-rocket-with-smoke.png'
+import dollarCoinPiggyBank from '#images/misc/dollar-coins-flying-pink-piggy-bank.png'
 
 interface Pricing {
   title?: string

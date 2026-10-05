@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ProjectAnalytics } from '@db/dashboard/type'
+import type { ProjectAnalytics } from '#db/dashboard/type'
 
 const projectTableHeaders = [
   { title: 'PROJECT', key: 'project' },

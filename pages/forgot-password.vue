@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { useGenerateImageVariant } from '@core/composable/useGenerateImageVariant'
-import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
+import { useGenerateImageVariant } from '#core/composable/useGenerateImageVariant'
+import { VNodeRenderer } from '#layouts/components/VNodeRenderer'
 import { themeConfig } from '@themeConfig'
 
-import authV2ForgotPasswordIllustrationDark from '@images/pages/auth-v2-forgot-password-illustration-dark.png'
-import authV2ForgotPasswordIllustrationLight from '@images/pages/auth-v2-forgot-password-illustration-light.png'
-import authV2MaskDark from '@images/pages/misc-mask-dark.png'
-import authV2MaskLight from '@images/pages/misc-mask-light.png'
+import authV2ForgotPasswordIllustrationDark from '#images/pages/auth-v2-forgot-password-illustration-dark.png'
+import authV2ForgotPasswordIllustrationLight from '#images/pages/auth-v2-forgot-password-illustration-light.png'
+import authV2MaskDark from '#images/pages/misc-mask-dark.png'
+import authV2MaskLight from '#images/pages/misc-mask-light.png'
 
 const email = ref('')
 

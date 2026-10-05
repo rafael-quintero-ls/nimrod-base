@@ -11,7 +11,7 @@ import { themeConfig } from '@themeConfig'
 
 // Styles
 import { cookieRef } from '@/@layouts/stores/config'
-import '@core/scss/template/libs/vuetify/index.scss'
+import '#core/scss/template/libs/vuetify/index.scss'
 import 'vuetify/styles'
 
 export default defineNuxtPlugin({

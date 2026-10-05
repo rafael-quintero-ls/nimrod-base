@@ -116,10 +116,22 @@ module.exports = {
       'error',
       'ignorePackages',
       {
-        js: 'never',
-        jsx: 'never',
-        ts: 'never',
-        tsx: 'never',
+        pattern: {
+          js: 'never',
+          jsx: 'never',
+          ts: 'never',
+          tsx: 'never',
+        },
+        pathGroupOverrides: [
+          // Ignore unplugin-icons' virtual `~icons/<collection>/<name>` imports (Rspack's
+          // SVG-as-icon-component replacement for `vite-svg-loader`, registered in
+          // `modules/rspack-vite-replacements.ts`) — no real file on disk, resolved at build
+          // time by the unplugin, so this rule cannot verify an extension either way.
+          {
+            pattern: '~icons/**',
+            action: 'ignore',
+          },
+        ],
       },
     ],
 
@@ -133,6 +145,13 @@ module.exports = {
 
         // Ignore vite's ?raw imports
         '.*\?raw',
+
+        // Ignore unplugin-icons' virtual `~icons/<collection>/<name>` imports (Rspack's
+        // SVG-as-icon-component replacement for `vite-svg-loader`, registered in
+        // `modules/rspack-vite-replacements.ts` — no real file on disk, resolved at build
+        // time by the unplugin, same reason `#components`/`virtual:meta-layouts` are ignored
+        // above).
+        '^~icons/',
       ],
     }],
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Permission } from '@db/apps/permission/types'
+import type { Permission } from '#db/apps/permission/types'
 
 definePageMeta({
   action: 'read',

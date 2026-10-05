@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { layoutConfig } from '@layouts'
-import { can } from '@layouts/plugins/casl'
-import { useLayoutConfigStore } from '@layouts/stores/config'
-import type { NavSectionTitle } from '@layouts/types'
-import { getDynamicI18nProps } from '@layouts/utils'
+import { layoutConfig } from '#layouts'
+import { can } from '#layouts/plugins/casl'
+import { useLayoutConfigStore } from '#layouts/stores/config'
+import type { NavSectionTitle } from '#layouts/types'
+import { getDynamicI18nProps } from '#layouts/utils'
 
 defineProps<{
   item: NavSectionTitle

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
-import type { Notification } from '@layouts/types'
+import type { Notification } from '#layouts/types'
 
 interface Props {
   notifications: Notification[]

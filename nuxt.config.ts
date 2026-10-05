@@ -1,9 +1,9 @@
 import { fileURLToPath } from 'node:url'
-import svgLoader from 'vite-svg-loader'
-import vuetify from 'vite-plugin-vuetify'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  builder: 'rspack',
+
   // ℹ️ This repo keeps `pages/`, `middleware/`, `layouts/`, `components/`, `plugins/`, and
   // `server/` at the repo root (Nuxt 3-style layout), not inside `app/`. Nuxt 4 auto-detects
   // `srcDir: 'app'` whenever `app/` exists with content (here: `app/router.options.ts`,
@@ -36,8 +36,8 @@ export default defineNuxtConfig({
   },
 
   css: [
-    '@core/scss/template/index.scss',
-    '@styles/styles.scss',
+    '#core/scss/template/index.scss',
+    '#styles/styles.scss',
     '@/plugins/iconify/icons.css',
   ],
 
@@ -135,17 +135,30 @@ export default defineNuxtConfig({
   typescript: {
     tsConfig: {
       compilerOptions: {
+        // ℹ️ `unplugin-icons/nuxt`'s wrapper would normally add this automatically, but
+        // that wrapper has no Rspack branch (see `modules/rspack-vite-replacements.ts`, which
+        // registers `unplugin-icons` directly for both builders instead), so this type
+        // augmentation for `~icons/*` imports must be added here directly.
+        types: ['unplugin-icons/types/vue'],
         paths: {
           '@/*': ['../*'],
           '@themeConfig': ['../themeConfig.ts'],
+          '#layouts/*': ['../@layouts/*'],
+          '#layouts': ['../@layouts'],
           '@layouts/*': ['../@layouts/*'],
           '@layouts': ['../@layouts'],
+          '#core/*': ['../@core/*'],
+          '#core': ['../@core'],
           '@core/*': ['../@core/*'],
           '@core': ['../@core'],
+          '#images/*': ['../assets/images/*'],
           '@images/*': ['../assets/images/*'],
+          '#styles/*': ['../assets/styles/*'],
           '@styles/*': ['../assets/styles/*'],
           '@validators': ['../@core/utils/validators'],
+          '#db/*': ['../server/fake-db/*'],
           '@db/*': ['../server/fake-db/*'],
+          '#api-utils/*': ['../server/utils/*'],
           '@api-utils/*': ['../server/utils/*'],
         },
       },
@@ -158,15 +171,33 @@ export default defineNuxtConfig({
     client: false,
   },
 
+  // ℹ️ Every alias below is dual-registered under both a `#name` and the original `@name`
+  // key, pointing at the same target. `#name` is REQUIRED for JS/TS `import` statements:
+  // `@nuxt/rspack-builder`'s externals resolver only recognizes a short fixed prefix list
+  // (`#`, `~`, `@/`, …) as definitely-internal before falling back to filesystem
+  // resolution — a bare `@core` specifier fails that fast path and gets misresolved as an
+  // external npm scoped package (`@scope/package`), 500ing every SSR request. `@name` is
+  // STILL REQUIRED for Sass: every `@use`/`@forward` statement in this repo's `.scss` files
+  // and `<style lang="scss">` blocks references the `@name` form and resolves via this same
+  // alias map directly (not through the JS module resolver the bug above lives in) — do NOT
+  // remove the `@name` entries without first migrating every `@use`/`@forward` statement to
+  // `#name`.
   alias: {
     '@': fileURLToPath(new URL('.', import.meta.url)),
     '@themeConfig': fileURLToPath(new URL('./themeConfig.ts', import.meta.url)),
+    '#core': fileURLToPath(new URL('./@core', import.meta.url)),
     '@core': fileURLToPath(new URL('./@core', import.meta.url)),
+    '#layouts': fileURLToPath(new URL('./@layouts', import.meta.url)),
     '@layouts': fileURLToPath(new URL('./@layouts', import.meta.url)),
+    '#images': fileURLToPath(new URL('./assets/images/', import.meta.url)),
     '@images': fileURLToPath(new URL('./assets/images/', import.meta.url)),
+    '#styles': fileURLToPath(new URL('./assets/styles/', import.meta.url)),
     '@styles': fileURLToPath(new URL('./assets/styles/', import.meta.url)),
+    '#configured-variables': fileURLToPath(new URL('./assets/styles/variables/_template.scss', import.meta.url)),
     '@configured-variables': fileURLToPath(new URL('./assets/styles/variables/_template.scss', import.meta.url)),
+    '#db': fileURLToPath(new URL('./server/fake-db/', import.meta.url)),
     '@db': fileURLToPath(new URL('./server/fake-db/', import.meta.url)),
+    '#api-utils': fileURLToPath(new URL('./server/utils/', import.meta.url)),
     '@api-utils': fileURLToPath(new URL('./server/utils/', import.meta.url)),
   },
   vue: {
@@ -182,12 +213,19 @@ export default defineNuxtConfig({
       alias: {
         '@': fileURLToPath(new URL('.', import.meta.url)),
         '@themeConfig': fileURLToPath(new URL('./themeConfig.ts', import.meta.url)),
+        '#core': fileURLToPath(new URL('./@core', import.meta.url)),
         '@core': fileURLToPath(new URL('./@core', import.meta.url)),
+        '#layouts': fileURLToPath(new URL('./@layouts', import.meta.url)),
         '@layouts': fileURLToPath(new URL('./@layouts', import.meta.url)),
+        '#images': fileURLToPath(new URL('./assets/images/', import.meta.url)),
         '@images': fileURLToPath(new URL('./assets/images/', import.meta.url)),
+        '#styles': fileURLToPath(new URL('./assets/styles/', import.meta.url)),
         '@styles': fileURLToPath(new URL('./assets/styles/', import.meta.url)),
+        '#configured-variables': fileURLToPath(new URL('./assets/styles/variables/_template.scss', import.meta.url)),
         '@configured-variables': fileURLToPath(new URL('./assets/styles/variables/_template.scss', import.meta.url)),
+        '#db': fileURLToPath(new URL('./server/fake-db/', import.meta.url)),
         '@db': fileURLToPath(new URL('./server/fake-db/', import.meta.url)),
+        '#api-utils': fileURLToPath(new URL('./server/utils/', import.meta.url)),
         '@api-utils': fileURLToPath(new URL('./server/utils/', import.meta.url)),
       },
     },
@@ -200,23 +238,14 @@ export default defineNuxtConfig({
       exclude: ['vuetify'],
     },
 
-    plugins: [
-      svgLoader(),
-      vuetify({
-        styles: {
-          // ℹ️ Absolute path (not relative to Vite's `root`, which Nuxt 4 sets to `srcDir`/
-          // `app/` by convention) — a relative path here silently resolved against `app/`
-          // instead of the repo root, producing "Can't find stylesheet to import" for every
-          // Vuetify component style on every route (preexisting on `main`, not introduced by
-          // this change — reproduced there independently before this fix).
-          configFile: fileURLToPath(new URL('./assets/styles/variables/_vuetify.scss', import.meta.url)),
-        },
-      }),
-    ],
+    // ℹ️ Vuetify auto-import/component-resolution and `~icons/<collection>/<name>` (task 5's
+    // SVG-as-icon migration) plugins are registered centrally in
+    // `modules/rspack-vite-replacements.ts` for both this Vite path and the Rspack path —
+    // not duplicated here.
   },
 
   build: {
-    transpile: ['vuetify'],
+    transpile: ['vuetify', 'vue-demi'],
   },
 
   compatibilityDate: '2025-07-15',
@@ -226,7 +255,15 @@ export default defineNuxtConfig({
     '@nuxtjs/device',
     '@nuxtjs/better-auth',
     '@pinia/nuxt',
+    '@vuetify/unplugin-styles/nuxt',
+    './modules/rspack-vite-replacements',
   ],
+
+  // ℹ️ `settings` intentionally omitted for now: the generated settings virtual template
+  // fails to compile under Rspack (documented defect, tasks.md 4.5a) — Vuetify defaults used
+  // until that's resolved. This module itself now handles per-component style extraction for
+  // all three builder targets (Vite, webpack, Rspack) via its own `/nuxt` wrapper.
+  vuetifyStyles: {},
 
   auth: {
     // ℹ️ Explicit absolute paths, not the module's own `'server/auth.config'`/

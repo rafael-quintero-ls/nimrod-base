@@ -1,6 +1,6 @@
 import type { LiteralUnion, ValueOf } from 'type-fest'
 import type { Skins } from './enums'
-import type { I18nLanguage, LayoutConfig } from '@layouts/types'
+import type { I18nLanguage, LayoutConfig } from '#layouts/types'
 
 interface ExplicitThemeConfig {
   app: {

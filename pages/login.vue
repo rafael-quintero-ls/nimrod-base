@@ -1,14 +1,14 @@
 <!-- ❗Errors in the form are set on line 60 -->
 <script setup lang="ts">
 import { VForm } from 'vuetify/components/VForm'
-import { useGenerateImageVariant } from '@core/composable/useGenerateImageVariant'
-import authV2LoginIllustrationBorderedDark from '@images/pages/auth-v2-login-illustration-bordered-dark.png'
-import authV2LoginIllustrationBorderedLight from '@images/pages/auth-v2-login-illustration-bordered-light.png'
-import authV2LoginIllustrationDark from '@images/pages/auth-v2-login-illustration-dark.png'
-import authV2LoginIllustrationLight from '@images/pages/auth-v2-login-illustration-light.png'
-import authV2MaskDark from '@images/pages/misc-mask-dark.png'
-import authV2MaskLight from '@images/pages/misc-mask-light.png'
-import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
+import { useGenerateImageVariant } from '#core/composable/useGenerateImageVariant'
+import authV2LoginIllustrationBorderedDark from '#images/pages/auth-v2-login-illustration-bordered-dark.png'
+import authV2LoginIllustrationBorderedLight from '#images/pages/auth-v2-login-illustration-bordered-light.png'
+import authV2LoginIllustrationDark from '#images/pages/auth-v2-login-illustration-dark.png'
+import authV2LoginIllustrationLight from '#images/pages/auth-v2-login-illustration-light.png'
+import authV2MaskDark from '#images/pages/misc-mask-dark.png'
+import authV2MaskLight from '#images/pages/misc-mask-light.png'
+import { VNodeRenderer } from '#layouts/components/VNodeRenderer'
 import { themeConfig } from '@themeConfig'
 import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
 

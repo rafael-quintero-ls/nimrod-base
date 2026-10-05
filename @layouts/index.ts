@@ -1,9 +1,9 @@
 import type { PartialDeep } from 'type-fest'
 import type { Plugin } from 'vue'
-import { layoutConfig } from '@layouts/config'
-import { cookieRef, useLayoutConfigStore } from '@layouts/stores/config'
-import type { LayoutConfig } from '@layouts/types'
-import { _setDirAttr } from '@layouts/utils'
+import { layoutConfig } from '#layouts/config'
+import { cookieRef, useLayoutConfigStore } from '#layouts/stores/config'
+import type { LayoutConfig } from '#layouts/types'
+import { _setDirAttr } from '#layouts/utils'
 
 // 🔌 Plugin
 export const createLayouts = (userConfig: PartialDeep<LayoutConfig>): Plugin => {

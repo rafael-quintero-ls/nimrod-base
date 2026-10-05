@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import mastercard from '@images/icons/payments/mastercard.png'
-import visa from '@images/icons/payments/visa.png'
+import mastercard from '#images/icons/payments/mastercard.png'
+import visa from '#images/icons/payments/visa.png'
 
 interface CardDetails {
   name: string
